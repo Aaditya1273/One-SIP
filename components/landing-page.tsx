@@ -180,7 +180,7 @@ export function LandingPage() {
                     <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 </div>
-                <p className="text-muted-foreground animate-pulse text-center">Connect your Stellar wallet to access the platform</p>
+                <p className="text-muted-foreground animate-pulse text-center">Connect your OneChain wallet to access the platform</p>
               </div>
             )}
           </div>
@@ -203,7 +203,7 @@ export function LandingPage() {
               {
                 icon: Zap,
                 title: "Yield Optimization",
-                description: "AI-powered yield routing across Stellar DeFi pools",
+                description: "AI-powered yield routing across OneChain DeFi pools",
                 color: "from-green-500/20 to-green-500/5",
                 iconColor: "text-green-600",
                 delay: "delay-200"
@@ -287,7 +287,7 @@ export function LandingPage() {
                   Ready to Start?
                 </h3>
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                  Connect your wallet and experience the future of DeFi on Stellar
+                  Connect your wallet and experience the future of DeFi on OneChain
                 </p>
                 <div className="flex justify-center transform hover:scale-105 transition-transform duration-300">
                   <Button 
@@ -318,7 +318,7 @@ export function LandingPage() {
             </span>
           </div>
           <p className="text-muted-foreground">
-            Built on Stellar Blockchain • Powered by Soroban • Production Ready
+            Built on OneChain Blockchain • Powered by Move • Production Ready
           </p>
         </div>
       </footer>

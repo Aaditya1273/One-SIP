@@ -1,19 +1,19 @@
-# Sphira - Automated DeFi Investment Platform on Stellar
+# OneSIP - Automated DeFi Investment Platform on OneChain
 
-*Production-ready DeFi platform for automated systematic investments on Stellar blockchain*
+*Production-ready DeFi platform for automated systematic investments on OneChain blockchain*
 
 <div align="center">
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://sphira-defi.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-*Revolutionizing systematic investments with AI-powered yield optimization, emergency fund protection, and conversational UX on Stellar's lightning-fast, low-cost blockchain*
+*Revolutionizing systematic investments with AI-powered yield optimization, emergency fund protection, and conversational UX on OneChain's lightning-fast, low-cost blockchain*
 
-[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js_15-000000?logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](https://rust-lang.org)
-[![Stellar](https://img.shields.io/badge/Blockchain-Stellar-7D00FF.svg)](https://stellar.org)
-[![Soroban](https://img.shields.io/badge/Smart_Contracts-Soroban-blue.svg)](https://soroban.stellar.org)
+[![Move](https://img.shields.io/badge/Move-000000?logo=move&logoColor=white)](https://move-language.github.io)
+[![OneChain](https://img.shields.io/badge/Blockchain-OneChain-7D00FF.svg)](https://onechain.network)
+[![OCT](https://img.shields.io/badge/Token-OCT-blue.svg)](https://onechain.network)
 
 [🎯 Live Demo](https://sphira-defi.vercel.app) • [📖 Documentation](https://docs.sphira.finance) • [🎥 Video Demo](https://youtube.com/sphira) • [🐦 Twitter](https://twitter.com/SphiraFinance)</div>
 
@@ -53,7 +53,7 @@ Sphira transforms how people invest in DeFi by combining **Systematic Investment
 | Static yield farming | 🧠 **AI-powered dynamic optimization** |
 | Vulnerable emergency funds | 🛡️ **Multi-sig protected vault** |
 | Complex interfaces | 💬 **Chat-based commands** |
-| High gas fees | ⚡ **Stellar's ultra-low fees (~$0.00001)** |
+| High gas fees | ⚡ **OneChain's ultra-low fees (~$0.00001)** |
 | No risk management | 📊 **Automated portfolio rebalancing** |
 
 ---
@@ -64,13 +64,13 @@ Sphira transforms how people invest in DeFi by combining **Systematic Investment
 
 #### 🔄 **Automated SIP 2.0 System**
 - **Smart Scheduling**: Daily, weekly, monthly investments with precision timing
-- **Multi-Token Support**: XLM, USDC on Stellar, and 50+ Stellar ecosystem assets
+- **Multi-Token Support**: OCT and OneChain ecosystem assets
 - **Flexible Parameters**: Custom amounts, frequencies, and duration limits
 - **Early Exit Options**: Withdraw with configurable penalty structures
 - **Pause/Resume**: Full control over investment schedules
 
 #### 🧠 **AI-Powered Yield Optimization Engine**
-- **Dynamic Allocation**: Real-time fund distribution across 20+ DeFi pools
+- **Dynamic Allocation**: Real-time fund distribution across 20+ OneChain DeFi pools
 - **Risk-Adjusted Returns**: Automated portfolio balancing based on risk tolerance
 - **Predictive Analytics**: ML models predict optimal yield opportunities
 - **Auto-Rebalancing**: Continuous optimization for maximum APY
@@ -90,10 +90,10 @@ Sphira transforms how people invest in DeFi by combining **Systematic Investment
 - **Smart Alerts**: Proactive notifications for opportunities and risks
 - **Multi-Language Support**: 12 languages for global accessibility
 
-#### ⚡ **Stellar Blockchain Integration**
+#### ⚡ **OneChain Blockchain Integration**
 - **Lightning Speed**: Sub-second transaction finality (3-5 seconds)
 - **Ultra-Low Fees**: ~$0.00001 average transaction cost
-- **Soroban Smart Contracts**: Rust/WASM-based contracts
+- **Move Smart Contracts**: Secure, resource-oriented programming
 - **High Throughput**: 1,000+ TPS capacity
 - **Carbon Neutral**: Environmentally sustainable blockchain
 
@@ -119,24 +119,24 @@ Sphira transforms how people invest in DeFi by combining **Systematic Investment
 ┌─────────────────────────────────────────────────────────────────┐
 │                    🌐 FRONTEND LAYER                            │
 ├─────────────────────────────────────────────────────────────────┤
-│  Next.js 14 App Router  │  TypeScript  │  Tailwind CSS         │
-│  React Components       │  Zustand     │  Framer Motion        │
+│  Next.js 15 App Router  │  TypeScript  │  Tailwind CSS         │
+│  React 19 Components    │  Zustand     │  Framer Motion        │
 │  PWA Support           │  React Query  │  Chart.js             │
 └─────────────────────────────────────────────────────────────────┘
                                    │
 ┌─────────────────────────────────────────────────────────────────┐
 │                   🔗 INTEGRATION LAYER                          │
 ├─────────────────────────────────────────────────────────────────┤
-│  Stellar Wallet Kit    │  Stellar SDK  │  Soroban Client       │
-│  Freighter Wallet      │  Horizon API  │  Generated TS Clients │
-│  WebSocket Client      │  GraphQL       │  REST APIs            │
+│  Sui dApp Kit          │  OneChain SDK │  Move Client          │
+│  OneWallet             │  RPC API      │  Generated TS Clients │
+│  WebSocket Client      │  GraphQL      │  REST APIs            │
 └─────────────────────────────────────────────────────────────────┘
                                    │
 ┌─────────────────────────────────────────────────────────────────┐
-│                  ⚡ STELLAR SOROBAN PLATFORM                    │
+│                  ⚡ ONECHAIN MOVE PLATFORM                      │
 ├─────────────────────────────────────────────────────────────────┤
-│  SIPManager.rs         │  YieldRouter.rs  │  LockVault.rs       │
-│  Rust/WASM Contracts   │  Soroban SDK     │  Horizon API        │
+│  SIPManager.move       │  YieldRouter.move│  LockVault.move     │
+│  Move Smart Contracts  │  OneChain SDK    │  RPC API            │
 │  1K+ TPS              │  Sub-5s finality │  ~$0.00001 fees     │
 └─────────────────────────────────────────────────────────────────┘
                                    │
