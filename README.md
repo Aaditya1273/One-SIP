@@ -1,451 +1,478 @@
-# OneSIP - Automated DeFi Investment Platform on OneChain
+# Sphira - DeFi Investment Platform on OneChain
 
 *Production-ready DeFi platform for automated systematic investments on OneChain blockchain*
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://sphira-defi.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js_15-000000?logo=next.js&logoColor=white&style=for-the-badge)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white&style=for-the-badge)](https://typescriptlang.org)
+[![Move](https://img.shields.io/badge/Move-000000?logo=move&logoColor=white&style=for-the-badge)](https://move-language.github.io)
+[![OneChain](https://img.shields.io/badge/Blockchain-OneChain-7D00FF.svg?style=for-the-badge)](https://onechain.network)
 
-*Revolutionizing systematic investments with AI-powered yield optimization, emergency fund protection, and conversational UX on OneChain's lightning-fast, low-cost blockchain*
-
-[![Next.js](https://img.shields.io/badge/Next.js_15-000000?logo=next.js&logoColor=white)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Move](https://img.shields.io/badge/Move-000000?logo=move&logoColor=white)](https://move-language.github.io)
-[![OneChain](https://img.shields.io/badge/Blockchain-OneChain-7D00FF.svg)](https://onechain.network)
-[![OCT](https://img.shields.io/badge/Token-OCT-blue.svg)](https://onechain.network)
-
-[🎯 Live Demo](https://sphira-defi.vercel.app) • [📖 Documentation](https://docs.sphira.finance) • [🎥 Video Demo](https://youtube.com/sphira) • [🐦 Twitter](https://twitter.com/SphiraFinance)</div>
-
----
-
-## 🎯 **The Problem We're Solving**
+*Revolutionizing systematic investments with AI-powered yield optimization and emergency fund protection on OneChain's lightning-fast blockchain*
 
 </div>
 
-### 💸 **Current DeFi Investment Challenges**
-- **Manual Investment Fatigue**: Users must manually invest repeatedly, leading to inconsistent investment patterns
-- **Yield Optimization Complexity**: Finding and switching between best-performing pools requires constant monitoring
-- **Emergency Fund Insecurity**: Difficulty to lock emergency funds while maintaining access for real emergencies
-- **Fee Inefficiency**: High gas fees on Ethereum and other chains drain user funds on expensive transactions
-- **Risk Management Gaps**: No automated risk assessment and portfolio rebalancing
+---
 
-### 📊 **Market Statistics**
-- **$200B** Total Value Locked in DeFi protocols
-- **$2.3B** lost annually due to poor yield optimization
-- **89%** of users want automated investment solutions
-- **Only 12%** of DeFi users actively rebalance their portfolios
-- **78%** struggle with consistent investment discipline
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Quick Start](#-quick-start)
+- [Deployment](#-deployment)
+- [Smart Contracts](#-smart-contracts)
+- [API Documentation](#-api-documentation)
+- [Contributing](#-contributing)
 
 ---
 
-## 💡 **Our Revolutionary Solution**
+## 🎯 Overview
 
-### 🔥 **Sphira: The Complete DeFi Investment Automation Platform**
+Sphira is a comprehensive DeFi investment platform built on OneChain blockchain that enables:
 
-Sphira transforms how people invest in DeFi by combining **Systematic Investment Plans (SIPs)**, **AI-powered yield optimization**, **emergency fund protection**, and **conversational UX** into one seamless platform on Stellar's ultra-fast, low-cost blockchain with Soroban smart contracts.
+- **Automated SIPs**: Systematic Investment Plans with customizable schedules
+- **AI Yield Optimization**: Smart fund allocation across DeFi pools
+- **Emergency Vault**: Multi-sig protected fund locking system
+- **Real-time Analytics**: Portfolio tracking and performance metrics
+- **Conversational UX**: Chat-based investment management
 
-### 🌟 **Why Sphira is Revolutionary**
+### Why OneChain?
 
-| Traditional DeFi | 🚀 **Sphira Innovation** |
-|------------------|---------------------------|
-| Manual investments | ⚡ **Automated SIP execution** |
-| Static yield farming | 🧠 **AI-powered dynamic optimization** |
-| Vulnerable emergency funds | 🛡️ **Multi-sig protected vault** |
-| Complex interfaces | 💬 **Chat-based commands** |
-| High gas fees | ⚡ **OneChain's ultra-low fees (~$0.00001)** |
-| No risk management | 📊 **Automated portfolio rebalancing** |
-
----
-
-## 🚀 **Revolutionary Features**
-
-### 💎 **Core Innovation Stack**
-
-#### 🔄 **Automated SIP 2.0 System**
-- **Smart Scheduling**: Daily, weekly, monthly investments with precision timing
-- **Multi-Token Support**: OCT and OneChain ecosystem assets
-- **Flexible Parameters**: Custom amounts, frequencies, and duration limits
-- **Early Exit Options**: Withdraw with configurable penalty structures
-- **Pause/Resume**: Full control over investment schedules
-
-#### 🧠 **AI-Powered Yield Optimization Engine**
-- **Dynamic Allocation**: Real-time fund distribution across 20+ OneChain DeFi pools
-- **Risk-Adjusted Returns**: Automated portfolio balancing based on risk tolerance
-- **Predictive Analytics**: ML models predict optimal yield opportunities
-- **Auto-Rebalancing**: Continuous optimization for maximum APY
-- **Performance Tracking**: Detailed yield attribution and analytics
-
-#### 🛡️ **Emergency Vault Protection System**
-- **Multi-Sig Security**: 3-of-5 governance-controlled emergency unlocks
-- **Time-Lock Mechanism**: Configurable lock periods with early withdrawal penalties
-- **Community Governance**: Decentralized voting for emergency fund releases
-- **Audit Trail**: Complete transparency for all vault operations
-- **Insurance Integration**: Optional coverage for locked funds
-
-#### 💬 **Conversational DeFi Interface**
-- **Natural Language Commands**: `/startSIP 100 USDC weekly`, `/optimize portfolio`
-- **AI Assistant**: Smart support for investment decisions and platform navigation
-- **Voice Commands**: Hands-free portfolio management (coming soon)
-- **Smart Alerts**: Proactive notifications for opportunities and risks
-- **Multi-Language Support**: 12 languages for global accessibility
-
-#### ⚡ **OneChain Blockchain Integration**
-- **Lightning Speed**: Sub-second transaction finality (3-5 seconds)
-- **Ultra-Low Fees**: ~$0.00001 average transaction cost
-- **Move Smart Contracts**: Secure, resource-oriented programming
-- **High Throughput**: 1,000+ TPS capacity
-- **Carbon Neutral**: Environmentally sustainable blockchain
-
-#### 🔒 **Security-First Architecture**
-- **Audited Contracts**: Multiple security audits by leading firms
-- **Reentrancy Protection**: Comprehensive attack vector mitigation
-- **Access Control**: Role-based permissions and multi-sig governance
-- **Emergency Pause**: Circuit breakers for critical system protection
-- **Bug Bounty Program**: $100K+ rewards for security researchers
-
-#### 📱 **User Experience Innovation**
-- **Mobile-Native**: Progressive web app with offline capabilities
-- **Dark/Light Themes**: Customizable interface preferences
-- **Accessibility**: WCAG 2.1 AA compliant for inclusive design
+- ⚡ **Lightning Fast**: Sub-5 second transaction finality
+- 💰 **Ultra-Low Fees**: ~$0.00001 average transaction cost
+- 🔒 **Secure**: Move smart contract language with resource-oriented programming
+- 🌍 **Scalable**: 1,000+ TPS capacity
 
 ---
 
-## 🏗️ **Advanced System Architecture**
+## 🚀 Features
 
-### 🎯 **High-Level Architecture Overview**
+### Core Functionality
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    🌐 FRONTEND LAYER                            │
-├─────────────────────────────────────────────────────────────────┤
-│  Next.js 15 App Router  │  TypeScript  │  Tailwind CSS         │
-│  React 19 Components    │  Zustand     │  Framer Motion        │
-│  PWA Support           │  React Query  │  Chart.js             │
-└─────────────────────────────────────────────────────────────────┘
-                                   │
-┌─────────────────────────────────────────────────────────────────┐
-│                   🔗 INTEGRATION LAYER                          │
-├─────────────────────────────────────────────────────────────────┤
-│  Sui dApp Kit          │  OneChain SDK │  Move Client          │
-│  OneWallet             │  RPC API      │  Generated TS Clients │
-│  WebSocket Client      │  GraphQL      │  REST APIs            │
-└─────────────────────────────────────────────────────────────────┘
-                                   │
-┌─────────────────────────────────────────────────────────────────┐
-│                  ⚡ ONECHAIN MOVE PLATFORM                      │
-├─────────────────────────────────────────────────────────────────┤
-│  SIPManager.move       │  YieldRouter.move│  LockVault.move     │
-│  Move Smart Contracts  │  OneChain SDK    │  RPC API            │
-│  1K+ TPS              │  Sub-5s finality │  ~$0.00001 fees     │
-└─────────────────────────────────────────────────────────────────┘
-                                   │
-┌─────────────────────────────────────────────────────────────────┐
-│                    🗄️ DATA LAYER                               │
-├─────────────────────────────────────────────────────────────────┤
-│  PostgreSQL/SQLite     │  Redis Cache     │  Analytics DB       │
-│  User Preferences      │  Session Data    │  Performance Metrics│
-│  Transaction History   │  Real-time Data  │  ML Training Data   │
-└─────────────────────────────────────────────────────────────────┘
-                                   │
-┌─────────────────────────────────────────────────────────────────┐
-│                   🤖 AI/ML LAYER                               │
-├─────────────────────────────────────────────────────────────────┤
-│  Yield Prediction      │  Risk Assessment │  Portfolio Optimizer│
-│  Market Analysis       │  Anomaly Detection│  Recommendation    │
-│  TensorFlow.js         │  Python ML APIs  │  Real-time Inference│
-└─────────────────────────────────────────────────────────────────┘
-```
+#### 💎 Automated SIP System
+- Daily, weekly, monthly investment schedules
+- Multi-token support (OCT, USDC, etc.)
+- Flexible parameters and early exit options
+- Pause/resume capabilities
 
-### 🔧 **Smart Contract Architecture**
+#### 🧠 AI-Powered Yield Optimization
+- Dynamic fund allocation across 20+ DeFi pools
+- Risk-adjusted returns with auto-rebalancing
+- Predictive analytics for optimal yields
+- Real-time performance tracking
 
-#### **SIPManager.rs** - Core Investment Logic (Rust/Soroban)
-```rust
-#[contract]
-pub struct SIPManager;
-    struct SIP {
-        address user;           // Investor wallet
-        address token;          // Investment token
-        uint256 amount;         // Per-deposit amount
-        Frequency frequency;    // Investment schedule
-        uint256 startTime;      // SIP start date
-        uint256 totalDeposits;  // Cumulative investments
-        Status status;          // Active/Paused/Cancelled
-    }
+#### 🛡️ Emergency Vault Protection
+- Multi-sig security (3-of-5 governance)
+- Time-lock mechanisms with configurable penalties
+- Community governance for emergency unlocks
+- Complete audit trail transparency
+
+#### 📊 Real-time Dashboard
+- Portfolio overview with live balance
+- Active SIPs tracking
+- Yield performance charts
+- Recent activity feed
+
+---
+
+## 🏗️ Architecture
+
+### System Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[Next.js 15 App]
+        B[React Components]
+        C[Tailwind CSS]
+    end
     
-    // ✅ createSIP() - Initialize investment plan
-    // ⏰ executeSIP() - Process scheduled deposits
-    // ⏸️ pauseSIP() - Temporary halt
-    // ❌ cancelSIP() - Permanent termination
-    // 🚨 earlyWithdrawal() - Emergency fund access
-}
-```
-
-#### 🎯 **YieldRouter.rs** - AI-Powered Optimization (Rust/Soroban)
-The YieldRouter automatically distributes your funds across the best-performing Stellar DeFi pools:
-- **Liquidity Pools**: Stellar AMMs (e.g., Soroswap)
-- **Lending Protocols**: Soroban-based lending
-- **Staking Rewards**: Native XLM staking
-
-```rust
-#[contract]
-pub struct YieldRouter;
-    struct Pool {
-        address poolAddress;    // DeFi protocol address
-        uint256 currentAPY;     // Real-time yield
-        uint256 riskScore;      // 1-10 risk assessment
-        uint256 maxCapacity;    // Pool capacity limit
-        bool isActive;          // Pool status
-    }
+    subgraph "Integration Layer"
+        D[Sui dApp Kit]
+        E[OneChain SDK]
+        F[Move Client]
+    end
     
-    // Key functions:
-    // 💰 deposit() - Smart allocation
-    // 🤖 rebalance() - AI-driven optimization
-    // 🌾 harvestYield() - Compound returns
-    // 📈 getOptimalPools() - Best opportunities
-    // 🎯 calculateRisk() - Risk assessment
-}
-```
-
-#### 🛡️ **LockVault.rs** - Emergency Protection System (Rust/Soroban)
-Protect your funds with the LockVault:
-1. Navigate to Emergency Vault
-2. Lock funds with custom unlock conditions
-3. Multi-sig approval required for emergency unlocks
-
-```rust
-#[contract]
-pub struct LockVault;
-    struct Lock {
-        address user;           // Fund owner
-        uint256 amount;         // Locked amount
-        uint256 unlockTime;     // Scheduled unlock
-        LockStatus status;      // Lock state
-        string reason;          // Lock purpose
-    }
+    subgraph "OneChain Blockchain"
+        G[SIP Manager Contract]
+        H[Yield Router Contract]
+        I[Lock Vault Contract]
+    end
     
-    struct EmergencyProposal {
-        uint256 lockId;         // Target lock
-        address proposer;       // Proposal creator
-        uint256 approvals;      // Vote count
-        bool executed;          // Execution status
-    }
+    subgraph "Data Layer"
+        J[Local Storage]
+        K[Blockchain State]
+    end
     
-    // 🔒 Key Functions:
-    // lockFunds() - Secure emergency funds
-    // createEmergencyProposal() - Governance voting
-    // executeEmergencyUnlock() - Multi-sig release
-    // withdrawFunds() - Time-based unlock
-}
-## 🧪 **Testing & Quality Assurance**
-
-### Smart Contract Tests
-```bash
-cd contracts
-cargo test
+    A --> D
+    B --> E
+    D --> G
+    E --> H
+    F --> I
+    G --> K
+    H --> K
+    I --> K
+    B --> J
 ```
 
-### Frontend Tests
-```bash
-npm run test
+### User Flow Diagram
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant W as Wallet
+    participant F as Frontend
+    participant B as Blockchain
+    participant C as Smart Contract
+    
+    U->>W: Connect Wallet
+    W->>F: Wallet Connected
+    F->>B: Request Balance
+    B->>F: Return Balance
+    
+    U->>F: Create SIP
+    F->>W: Request Signature
+    W->>U: Confirm Transaction
+    U->>W: Approve
+    W->>C: Execute create_sip()
+    C->>B: Store SIP Object
+    B->>F: Transaction Success
+    F->>U: SIP Created ✅
 ```
 
-### Integration Tests
-```bash
-npm run test:integration
+### SIP Execution Flow
+
+```mermaid
+flowchart LR
+    A[SIP Created] --> B{Time Check}
+    B -->|Not Due| C[Wait]
+    C --> B
+    B -->|Due| D[Execute Deposit]
+    D --> E[Split Coins]
+    E --> F[Transfer to Pool]
+    F --> G[Update SIP State]
+    G --> H[Emit Event]
+    H --> I[Next Execution Scheduled]
+    I --> B
 ```
 
-### Security Audit
-```bash
-cd contracts
-npm run audit
+### Smart Contract Architecture
+
+```mermaid
+graph LR
+    subgraph "SIP Manager"
+        A[create_sip]
+        B[execute_sip]
+        C[pause_sip]
+        D[cancel_sip]
+    end
+    
+    subgraph "Yield Router"
+        E[deposit]
+        F[rebalance]
+        G[harvest_yield]
+    end
+    
+    subgraph "Lock Vault"
+        H[lock_funds]
+        I[unlock_vault]
+        J[emergency_proposal]
+    end
+    
+    A --> E
+    B --> E
+    E --> F
+    F --> G
+    H --> I
+    I --> J
 ```
 
-## 🚀 **Quick Start & Deployment**
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ and npm
-- Rust and Cargo
 - OneChain CLI (`one`)
+- Git
 
-### Automated Setup (Windows)
-```powershell
-# Run setup script
-.\scripts\setup-onechain.ps1
-```
+### Installation
 
-### Manual Setup
-
-#### 1. Install OneChain CLI
+1. **Clone the repository**
 ```bash
-cargo install --locked --git https://github.com/one-chain-labs/onechain.git one_chain --features tracing
-mv ~/.cargo/bin/one_chain ~/.cargo/bin/one
+git clone https://github.com/yourusername/sphira-defi.git
+cd sphira-defi
 ```
 
-#### 2. Create Wallet
-```bash
-one client
-# Follow prompts and save recovery phrase!
-```
-
-#### 3. Get Test OCT
-```bash
-one client faucet
-```
-
-#### 4. Install Dependencies
+2. **Install dependencies**
 ```bash
 npm install
 ```
 
-#### 5. Build & Deploy Contracts
+3. **Set up environment variables**
 ```bash
-cd contracts
-one move build
-one move test
-one client publish --gas-budget 100000000
-```
-
-#### 6. Configure Environment
-```bash
-# Copy .env.example to .env
 cp .env.example .env
-
-# Update with your Package IDs from deployment
 ```
 
-#### 7. Run Development Server
+Edit `.env` with your configuration:
+```env
+NEXT_PUBLIC_ONECHAIN_NETWORK=testnet
+NEXT_PUBLIC_ONECHAIN_RPC_URL=https://rpc-testnet.onelabs.cc:443
+NEXT_PUBLIC_ONECHAIN_FAUCET_URL=https://faucet-testnet.onelabs.cc/v1/gas
+
+# Smart Contract Package IDs (update after deployment)
+NEXT_PUBLIC_SIP_MANAGER_PACKAGE_ID=YOUR_PACKAGE_ID
+NEXT_PUBLIC_YIELD_ROUTER_PACKAGE_ID=YOUR_PACKAGE_ID
+NEXT_PUBLIC_LOCK_VAULT_PACKAGE_ID=YOUR_PACKAGE_ID
+
+# Shared Object IDs
+NEXT_PUBLIC_SIP_MANAGER_OBJECT_ID=YOUR_SIP_MANAGER_ID
+NEXT_PUBLIC_YIELD_ROUTER_OBJECT_ID=YOUR_YIELD_ROUTER_ID
+NEXT_PUBLIC_VAULT_MANAGER_OBJECT_ID=YOUR_VAULT_MANAGER_ID
+
+# AI Configuration
+GOOGLE_GEMINI_API_KEY=your_api_key_here
+```
+
+4. **Run development server**
 ```bash
 npm run dev
 ```
 
-### Automated Deployment (Windows)
-```powershell
-.\scripts\deploy-onechain.ps1
-```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Docker Deployment
+---
+
+## 📦 Deployment
+
+### Deploy to Netlify
+
+#### Option 1: One-Click Deploy
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yourusername/sphira-defi)
+
+#### Option 2: Manual Deployment
+
+1. **Build the project**
 ```bash
-docker-compose up -d
+npm run build
 ```
 
-## 📊 **Live Demo Walkthrough**
-
-### 1. **Dashboard Overview**
-- Portfolio balance: $10,000
-- Active SIPs: 3 running
-- Total yield earned: $250 (2.5% APY)
-- Emergency funds locked: $2,000
-
-### 2. **Create SIP via Chat**
-```
-User: /startSIP 50 USDC weekly
-Bot: ✅ SIP created! 50 USDC weekly for 12 weeks. Total: $600
+2. **Install Netlify CLI**
+```bash
+npm install -g netlify-cli
 ```
 
-### 3. **AI Yield Optimization**
-- Current allocations across 5 Stellar pools
-- Best performing: XLM-USDC LP (15% APY)
-- Auto-rebalancing every 24 hours
-
-### 4. **Emergency Vault Demo**
-```
-User: /lockFunds 1000 USDC
-Bot: 🔒 Emergency lock created. Requires 3/5 multi-sig for unlock.
+3. **Login to Netlify**
+```bash
+netlify login
 ```
 
-## 🔧 API Documentation
+4. **Deploy**
+```bash
+netlify deploy --prod
+```
+
+#### Option 3: GitHub Integration
+
+1. Push your code to GitHub
+2. Go to [Netlify](https://app.netlify.com)
+3. Click "New site from Git"
+4. Select your repository
+5. Configure build settings:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `.next`
+   - **Node version**: 18
+
+6. Add environment variables in Netlify dashboard:
+   - Go to Site settings → Environment variables
+   - Add all variables from `.env`
+
+7. Deploy!
+
+### Deployment Workflow
+
+```mermaid
+graph LR
+    A[Push to GitHub] --> B[Netlify Detects Change]
+    B --> C[Install Dependencies]
+    C --> D[Run Build]
+    D --> E[Deploy to CDN]
+    E --> F[Live Site ✅]
+    
+    style F fill:#00D382
+```
+
+### Environment Variables Setup
+
+```mermaid
+flowchart TB
+    A[Local .env] --> B{Deploy Method}
+    B -->|Netlify UI| C[Site Settings]
+    B -->|CLI| D[netlify.toml]
+    B -->|GitHub Actions| E[Repository Secrets]
+    
+    C --> F[Environment Variables]
+    D --> F
+    E --> F
+    
+    F --> G[Build Process]
+    G --> H[Production Site]
+```
+
+---
+
+## 🔧 Smart Contracts
+
+### Deploy Smart Contracts
+
+1. **Install OneChain CLI**
+```bash
+cargo install --locked --git https://github.com/one-chain-labs/onechain.git one_chain
+mv ~/.cargo/bin/one_chain ~/.cargo/bin/one
+```
+
+2. **Create Wallet**
+```bash
+one client
+# Save your recovery phrase!
+```
+
+3. **Get Test OCT**
+```bash
+one client faucet
+```
+
+4. **Build Contracts**
+```bash
+cd contracts
+one move build
+```
+
+5. **Test Contracts**
+```bash
+one move test
+```
+
+6. **Deploy Contracts**
+```bash
+one client publish --gas-budget 100000000
+```
+
+7. **Update .env with deployed addresses**
+
+### Contract Addresses
+
+After deployment, you'll receive:
+- **Package ID**: The deployed package address
+- **Shared Object IDs**: SIP Manager, Yield Router, Vault Manager
+
+Update your `.env` file with these addresses.
+
+---
+
+## 📚 API Documentation
 
 ### REST Endpoints
 
 #### SIPs
-- `GET /api/sips` - List all SIPs
+- `GET /api/sips?userAddress={address}` - List user's SIPs
 - `POST /api/sips` - Create new SIP
 - `GET /api/sips/[id]` - Get SIP details
-- `PUT /api/sips/[id]` - Update SIP
 - `DELETE /api/sips/[id]` - Cancel SIP
 
 #### Portfolio
-- `GET /api/portfolio` - Get portfolio overview
-- `GET /api/portfolio/history` - Get historical data
+- `GET /api/portfolio?userAddress={address}` - Get portfolio overview
 
-#### Yield
-- `GET /api/yield/pools` - List available pools
-- `GET /api/yield/allocations` - Current allocations
+#### Activity
+- `GET /api/activity?userAddress={address}` - Get recent activity
 
-#### Chat
-- `POST /api/chat` - Process chat command
+#### Notifications
+- `GET /api/notifications?userAddress={address}` - Get notifications
+- `POST /api/notifications` - Mark as read
 
-### WebSocket Events
-- `sip_executed` - SIP deposit completed
-- `yield_updated` - Yield calculation updated
-- `emergency_triggered` - Emergency event
+#### Analytics
+- `GET /api/analytics` - Get platform analytics
 
-## 🔐 Security
+#### Yield Pools
+- `GET /api/yield/pools` - List available yield pools
 
-### Smart Contract Security
-- **Reentrancy Guards**: All external calls protected
-- **Access Control**: Role-based permissions
-- **Multi-sig**: Critical operations require multiple signatures
-- **Gas Optimization**: Efficient execution for high TPS
+---
 
-### Audit Tools
-- Soroban static analysis
-- Rust Clippy security scanning
-- Manual code review checklist
+## 🧪 Testing
 
-### Bug Bounty
-Report security vulnerabilities to security@sphira.finance
+### Run Tests
+```bash
+npm run test
+```
 
-## 🔮 Future Upgrades
+### Smart Contract Tests
+```bash
+cd contracts
+one move test
+```
 
-### Phase 2: zkML Integration
-- On-chain risk scoring
-- Automated yield optimization
-- Predictive analytics
+### E2E Tests
+```bash
+npm run test:e2e
+```
 
-### Phase 3: zkKYC/DID
-- Compliant onboarding
-- Identity verification
-- Regulatory compliance
-
-### Phase 4: Cross-Chain
-- Stellar-Ethereum bridge
-- Interledger integration
-- Solana compatibility
-
-### Phase 5: Gamification
-- NFT achievement badges
-- Community leaderboards
-- Governance tokens
+---
 
 ## 🤝 Contributing
 
+We welcome contributions! Please follow these steps:
+
 1. Fork the repository
-2. Create feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open Pull Request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+### Development Workflow
+
+```mermaid
+gitGraph
+    commit id: "Initial"
+    branch feature
+    checkout feature
+    commit id: "Add feature"
+    commit id: "Add tests"
+    checkout main
+    merge feature
+    commit id: "Release"
+```
+
+---
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+---
+
 ## 🆘 Support
 
-- Documentation: [docs.sphira.finance](https://docs.sphira.finance)
-- Discord: [discord.gg/sphira](https://discord.gg/sphira)
-- Email: support@sphira.finance
-- Bug Reports: [GitHub Issues](https://github.com/your-org/sphira-defi-platform/issues)
+- **Documentation**: [docs.sphira.finance](https://docs.sphira.finance)
+- **Discord**: [discord.gg/sphira](https://discord.gg/sphira)
+- **Email**: support@sphira.finance
+- **Issues**: [GitHub Issues](https://github.com/yourusername/sphira-defi/issues)
+
+---
 
 ## 🙏 Acknowledgments
 
-- Stellar Development Foundation for the Soroban platform
-- Scaffold Stellar team for rapid development tools
-- Soroban SDK for seamless contract development
-- Next.js and Vercel for the development platform
-- The DeFi community for inspiration and feedback
+- OneChain team for the amazing blockchain platform
+- Sui/Move community for the smart contract framework
+- Next.js team for the incredible web framework
+- All contributors and supporters
 
 ---
 
 **Built with ❤️ for the future of decentralized finance**
+
+*Powered by OneChain • Secured by Move • Built with Next.js*

@@ -33,14 +33,14 @@ async function processWithGeminiAI(message: string, userId: string): Promise<str
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
     
-    const prompt = `You are Sphira AI Assistant, an expert DeFi platform assistant for the Sphira platform built on Stellar blockchain. 
+    const prompt = `You are Sphira AI Assistant, an expert DeFi platform assistant for the Sphira platform built on OneChain blockchain. 
 
 CONTEXT: Sphira is a comprehensive DeFi platform that offers:
 - SIP (Systematic Investment Plans) for crypto
 - Yield optimization strategies
 - Emergency vault for secure fund locking
 - Portfolio management and analytics
-- Built on Stellar network with Soroban smart contracts
+- Built on OneChain network with Move smart contracts
 - Ultra-low fees (~$0.00001 per transaction)
 - Sub-second transaction finality
 
@@ -56,12 +56,12 @@ INSTRUCTIONS:
 - Don't mention wallet connection requirements
 
 AVAILABLE FEATURES:
-- /startSIP - Create systematic investment plans (e.g., "/startSIP 10 XLM weekly")
+- /startSIP - Create systematic investment plans (e.g., "/startSIP 10 OCT weekly")
 - /portfolio - View portfolio analytics  
-- /yield - Optimize yield strategies across Stellar pools
+- /yield - Optimize yield strategies across OneChain pools
 - /lockFunds - Secure emergency funds with multi-sig vault
-- /balance - Check XLM and asset balances
-- /history - Transaction history on Stellar network
+- /balance - Check OCT and asset balances
+- /history - Transaction history on OneChain network
 
 Respond naturally and helpfully:`
 
@@ -83,7 +83,7 @@ function processBasicCommand(message: string): string {
   }
 
   if (command.includes("portfolio") || command.includes("balance")) {
-    return "📊 Track your DeFi portfolio with Sphira's advanced analytics. Monitor your investments, yields, and performance across the Stellar blockchain."
+    return "📊 Track your DeFi portfolio with Sphira's advanced analytics. Monitor your investments, yields, and performance across the OneChain blockchain."
   }
 
   if (command.includes("yield") || command.includes("farming")) {
@@ -104,6 +104,6 @@ I can help you with:
 Ask me anything about DeFi or use these commands!`
   }
 
-  return "👋 Hi! I'm your Sphira AI Assistant. I can help you with DeFi investments, SIPs, yield farming, and portfolio management on Stellar blockchain. What would you like to know?"
+  return "👋 Hi! I'm your Sphira AI Assistant. I can help you with DeFi investments, SIPs, yield farming, and portfolio management on OneChain blockchain. What would you like to know?"
 }
 

@@ -6,16 +6,15 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Shield, Key, Smartphone, AlertTriangle, CheckCircle, Clock, Lock, Wallet, RefreshCw, ExternalLink } from "lucide-react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 import { useState, useEffect } from "react"
 
 export default function SecurityPage() {
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
+  const address = currentAccount?.address
+  const isConnected = !!currentAccount
   const [securityData, setSecurityData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  
-  // Freighter wallet connector name
-  const connector = { name: 'Freighter' }
 
   // Fetch real security data
   useEffect(() => {
@@ -31,9 +30,11 @@ export default function SecurityPage() {
           walletAddress: address,
           securityScore: 85, // TODO: Calculate from blockchain activity
           activeSessions: 1,
-          connectorName: connector?.name || "Freighter",
+          connectorName: "OneChain Wallet",
           lastLogin: new Date().toISOString(),
-          recentActivity: [] // TODO: Fetch from blockchain events
+          connectionTime: new Date().toISOString(),
+          recentActivity: [], // TODO: Fetch from blockchain events
+          alerts: 0
         })
       } catch (error) {
         console.error("Error fetching security data:", error)
@@ -43,7 +44,7 @@ export default function SecurityPage() {
     }
 
     fetchRealSecurityData()
-  }, [address, isConnected, connector])
+  }, [address, isConnected])
 
   if (!isConnected) {
     return (
@@ -51,7 +52,7 @@ export default function SecurityPage() {
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold">Security</h1>
-            <p className="text-muted-foreground">Real-time wallet security monitoring on Stellar blockchain</p>
+            <p className="text-muted-foreground">Real-time wallet security monitoring on OneChain blockchain</p>
           </div>
 
           <Card className="bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-0">
@@ -59,7 +60,7 @@ export default function SecurityPage() {
               <Shield className="h-20 w-20 text-muted-foreground mb-6" />
               <h3 className="text-2xl font-semibold mb-4">Connect Wallet Required</h3>
               <p className="text-muted-foreground mb-8 max-w-md">
-                Connect your wallet to monitor security status and activity on Stellar blockchain
+                Connect your wallet to monitor security status and activity on OneChain blockchain
               </p>
               <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
                 Real Security Monitoring
@@ -77,7 +78,7 @@ export default function SecurityPage() {
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold">Security</h1>
-            <p className="text-muted-foreground">Loading real security data from Stellar blockchain...</p>
+            <p className="text-muted-foreground">Loading real security data from OneChain blockchain...</p>
           </div>
 
           <Card>
@@ -98,8 +99,8 @@ export default function SecurityPage() {
         {/* Header with Wallet Address */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Security</h1>
-            <p className="text-muted-foreground">Real-time wallet security monitoring</p>
+            <h1 className="text-3xl font-bold text-black">Security</h1>
+            <p className="text-black">Real-time wallet security monitoring</p>
           </div>
           <div className="text-right">
             <p className="text-sm text-muted-foreground">Secured Wallet</p>
@@ -113,7 +114,7 @@ export default function SecurityPage() {
         <div className="grid gap-4 md:grid-cols-3">
           <Card className="bg-gradient-to-br from-card/80 to-muted/20 backdrop-blur-xl border-0 shadow-xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Security Score</CardTitle>
+              <CardTitle className="text-sm font-medium text-black">Security Score</CardTitle>
               <CheckCircle className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
@@ -218,7 +219,7 @@ export default function SecurityPage() {
                     </DialogHeader>
                     <div className="space-y-4">
                       <p className="text-muted-foreground">
-                        Verify your wallet security status on Stellar blockchain
+                        Verify your wallet security status on OneChain blockchain
                       </p>
                       <div className="bg-muted/50 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
@@ -306,7 +307,7 @@ export default function SecurityPage() {
               <div>
                 <p className="font-medium text-green-600 mb-1">100% Real Security Monitoring</p>
                 <p className="text-sm text-muted-foreground">
-                  All security data is fetched directly from your wallet connection and Stellar blockchain. 
+                  All security data is fetched directly from your wallet connection and OneChain blockchain. 
                   No fake security scores or mock activity logs are displayed. Real security events will appear here.
                 </p>
               </div>

@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Bell, Check, AlertTriangle, Info, Zap, Shield } from "lucide-react"
 import { useApi } from "@/lib/api"
-import { getPublicKey } from "@/lib/onechain-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 
 interface Notification {
   id: number
@@ -26,33 +26,23 @@ export function NotificationCenter() {
   const [unreadCount, setUnreadCount] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const [address, setAddress] = useState<string | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const currentAccount = useCurrentAccount()
   const api = useApi()
 
   // Ensure component is mounted before making API calls
   useEffect(() => {
     setMounted(true)
-    checkConnection()
   }, [])
-
-  const checkConnection = async () => {
-    const publicKey = await getPublicKey()
-    if (publicKey) {
-      setAddress(publicKey)
-      setIsConnected(true)
-    }
-  }
 
   useEffect(() => {
     if (!mounted) return // Don't run until component is mounted
     
-    if (isConnected && address) {
+    if (currentAccount) {
       loadNotifications()
       // Set up polling for new notifications only when wallet is connected
       const interval = setInterval(() => {
         // Double-check wallet is still connected before making API call
-        if (isConnected && address) {
+        if (currentAccount) {
           loadNotifications()
         }
       }, 30000) // Poll every 30 seconds
@@ -62,19 +52,27 @@ export function NotificationCenter() {
       setNotifications([])
       setUnreadCount(0)
     }
-  }, [address, isConnected, mounted])
+  }, [currentAccount, mounted])
 
   const loadNotifications = async () => {
     // Absolutely prevent API calls without wallet connection
-    if (!mounted || !isConnected || !address) {
+    if (!mounted || !currentAccount) {
       return
     }
 
     try {
-      const response = await api.notifications.list({ limit: 20, userAddress: address })
+      const response = await api.notifications.list({ limit: 20, userAddress: currentAccount.address })
       if (response.success && response.data) {
-        setNotifications(response.data as any)
-        setUnreadCount((response as any).unreadCount || 0)
+        // Load read status from localStorage
+        const readNotifications = getReadNotifications()
+        const notificationsWithReadStatus = (response.data as any[]).map((n: any) => ({
+          ...n,
+          read: readNotifications.includes(n.id) || readNotifications.includes(`${n.type}-${n.timestamp}`)
+        }))
+        
+        setNotifications(notificationsWithReadStatus)
+        const unread = notificationsWithReadStatus.filter((n: any) => !n.read).length
+        setUnreadCount(unread)
       } else {
         // Handle API error gracefully - just show empty notifications
         setNotifications([])
@@ -87,24 +85,61 @@ export function NotificationCenter() {
     }
   }
 
+  const getReadNotifications = (): string[] => {
+    if (typeof window === 'undefined') return []
+    try {
+      const stored = localStorage.getItem(`readNotifications_${currentAccount?.address}`)
+      return stored ? JSON.parse(stored) : []
+    } catch {
+      return []
+    }
+  }
+
+  const saveReadNotification = (notificationId: string) => {
+    if (typeof window === 'undefined') return
+    try {
+      const readNotifications = getReadNotifications()
+      if (!readNotifications.includes(notificationId)) {
+        readNotifications.push(notificationId)
+        localStorage.setItem(`readNotifications_${currentAccount?.address}`, JSON.stringify(readNotifications))
+      }
+    } catch (error) {
+      console.error('Failed to save read notification:', error)
+    }
+  }
+
   const markAsRead = async (id: number) => {
     try {
-      await api.notifications.markRead(id)
-      setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)))
-      setUnreadCount((prev) => Math.max(0, prev - 1))
+      const notification = notifications.find(n => n.id === id)
+      if (notification) {
+        // Save to localStorage using a unique identifier
+        const uniqueId = `${notification.type}-${notification.timestamp}`
+        saveReadNotification(uniqueId)
+        
+        // Update local state
+        setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)))
+        setUnreadCount((prev) => Math.max(0, prev - 1))
+      }
     } catch (error) {
-      // Silently handle mark as read errors
+      console.error('Failed to mark as read:', error)
     }
   }
 
   const markAllAsRead = async () => {
     try {
       const unreadNotifications = notifications.filter((n) => !n.read)
-      await Promise.all(unreadNotifications.map((n) => api.notifications.markRead(n.id)))
+      
+      // Save all to localStorage
+      unreadNotifications.forEach((n) => {
+        const uniqueId = `${n.type}-${n.timestamp}`
+        saveReadNotification(uniqueId)
+      })
+      
+      // Update local state
       setNotifications((prev) => prev.map((n) => ({ ...n, read: true })))
       setUnreadCount(0)
     } catch (error) {
-      // Silently handle mark all as read errors
+      console.error('Failed to mark all as read:', error)
     }
   }
 
@@ -147,7 +182,7 @@ export function NotificationCenter() {
   }
 
   // Don't render notification center if wallet is not connected
-  if (!mounted || !isConnected) {
+  if (!mounted || !currentAccount) {
     return (
       <Button variant="outline" size="sm" className="relative bg-transparent" disabled>
         <Bell className="h-4 w-4" />

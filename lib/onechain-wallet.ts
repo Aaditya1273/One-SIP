@@ -1,8 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { SuiClient } from '@mysten/sui/client'
+import { 
+  useCurrentAccount, 
+  useDisconnectWallet,
+  useSignAndExecuteTransaction,
+  useConnectWallet,
+  useSuiClient
+} from '@mysten/dapp-kit'
 import { Transaction } from '@mysten/sui/transactions'
-import { getFullnodeUrl, SuiClient } from '@mysten/sui/client'
 
 // OneChain network configuration
 export const ONECHAIN_NETWORKS = {
@@ -19,145 +25,39 @@ export const getOneChainClient = () => {
   return new SuiClient({ url: ACTIVE_NETWORK })
 }
 
-// Cache for wallet connection state
-let cachedAddress: string | null = null
-let cachedConnectionStatus: boolean | null = null
-let lastCheckTime = 0
-const CACHE_DURATION = 5000 // 5 seconds
-
-// Check if OneWallet is installed
-export const isOneWalletInstalled = async (): Promise<boolean> => {
-  if (typeof window === 'undefined') return false
+// Backward compatibility wrapper for useAccount
+export const useAccount = () => {
+  const currentAccount = useCurrentAccount()
   
-  try {
-    // Check for OneWallet or Sui Wallet in window
-    return !!(window as any).oneWallet || !!(window as any).suiWallet
-  } catch (error) {
-    console.error('OneWallet not detected:', error)
-    return false
+  return {
+    address: currentAccount?.address || null,
+    isConnected: !!currentAccount,
   }
 }
 
-// Connect wallet using Sui dApp Kit pattern
+// Backward compatibility wrapper for connectWallet
 export const connectWallet = async (): Promise<string> => {
-  const installed = await isOneWalletInstalled()
-  
-  if (!installed) {
-    throw new Error('OneWallet is not installed. Please install a Sui-compatible wallet.')
-  }
-
-  try {
-    // Request wallet connection
-    const wallet = (window as any).oneWallet || (window as any).suiWallet
-    
-    if (!wallet) {
-      throw new Error('No wallet found')
-    }
-
-    // Request account access
-    const accounts = await wallet.requestPermissions()
-    
-    if (!accounts || accounts.length === 0) {
-      throw new Error('No accounts found')
-    }
-    
-    const address = accounts[0]
-    
-    // Update cache and localStorage
-    cachedAddress = address
-    lastCheckTime = Date.now()
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('onechain_wallet_address', address)
-    }
-    
-    console.log('Connected to OneWallet:', address)
-    return address
-  } catch (error: any) {
-    console.error('Failed to connect wallet:', error)
-    
-    if (error?.message?.includes('User declined') || error?.message?.includes('rejected')) {
-      throw new Error('Connection rejected. Please approve the connection in your wallet.')
-    }
-    
-    throw new Error(error?.message || 'Failed to connect wallet. Please make sure your wallet is unlocked and try again.')
-  }
+  throw new Error('Use the ConnectButton component from @mysten/dapp-kit instead of calling connectWallet directly')
 }
 
-// Disconnect wallet
+// Backward compatibility wrapper for disconnectWallet  
 export const disconnectWallet = () => {
-  cachedAddress = null
-  cachedConnectionStatus = null
-  lastCheckTime = 0
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('onechain_wallet_address')
-  }
-  console.log('Wallet disconnected (local state cleared)')
+  throw new Error('Use the useDisconnectWallet hook from @mysten/dapp-kit instead')
 }
 
-// Get current public key
+// Backward compatibility wrapper for getPublicKey
 export const getPublicKey = async (): Promise<string | null> => {
-  const now = Date.now()
-  if (cachedAddress && (now - lastCheckTime) < CACHE_DURATION) {
-    return cachedAddress
-  }
-
-  if (typeof window !== 'undefined') {
-    const storedAddress = localStorage.getItem('onechain_wallet_address')
-    if (storedAddress) {
-      cachedAddress = storedAddress
-      lastCheckTime = now
-      return storedAddress
-    }
-  }
-
-  cachedAddress = null
-  lastCheckTime = now
+  // This function can't work outside of React context
+  // Components should use useCurrentAccount() hook instead
   return null
 }
 
-// Sign and execute transaction
+// Backward compatibility wrapper for signAndExecuteTransaction
 export const signAndExecuteTransaction = async (
   transaction: Transaction,
   options?: { requestType?: 'WaitForEffectsCert' | 'WaitForLocalExecution' }
 ): Promise<any> => {
-  const installed = await isOneWalletInstalled()
-  if (!installed) {
-    throw new Error('OneWallet is not installed')
-  }
-
-  try {
-    const wallet = (window as any).oneWallet || (window as any).suiWallet
-    
-    const result = await wallet.signAndExecuteTransactionBlock({
-      transactionBlock: transaction,
-      options: {
-        showEffects: true,
-        showEvents: true,
-        showObjectChanges: true,
-      },
-      requestType: options?.requestType || 'WaitForLocalExecution',
-    })
-    
-    return result
-  } catch (error: any) {
-    console.error('Failed to sign transaction:', error)
-    throw new Error(error?.message || 'Failed to sign transaction')
-  }
-}
-
-// Check if wallet is connected
-export const isWalletConnected = async (): Promise<boolean> => {
-  const installed = await isOneWalletInstalled()
-  if (!installed) {
-    return false
-  }
-
-  try {
-    const address = await getPublicKey()
-    return !!address
-  } catch {
-    return false
-  }
+  throw new Error('Use the useSignAndExecuteTransaction hook from @mysten/dapp-kit instead')
 }
 
 // Get network info
@@ -211,33 +111,4 @@ export const requestTestOCT = async (address: string): Promise<boolean> => {
     console.error('Failed to request test OCT:', error)
     return false
   }
-}
-
-// Hook-like function for compatibility
-export const useAccount = () => {
-  const [address, setAddress] = useState<string | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
-
-  useEffect(() => {
-    checkConnection()
-  }, [])
-
-  const checkConnection = async () => {
-    const publicKey = await getPublicKey()
-    if (publicKey) {
-      setAddress(publicKey)
-      setIsConnected(true)
-    }
-  }
-
-  return { address, isConnected }
-}
-
-// Hook-like function for disconnect
-export const useDisconnect = () => {
-  const disconnect = () => {
-    disconnectWallet()
-  }
-
-  return { disconnect }
 }

@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       const addressMap: { [key: string]: string } = {
         'USDC': process.env.NEXT_PUBLIC_USDC_ADDRESS || '0xA0b86a33E6441e6e80D0c4C6C7527d72e1d00000',
         'ETH': process.env.NEXT_PUBLIC_ETH_ADDRESS || '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-        'XLM': process.env.NEXT_PUBLIC_SOM_ADDRESS || '0x1234567890123456789012345678901234567890'
+        'OCT': process.env.NEXT_PUBLIC_SOM_ADDRESS || '0x1234567890123456789012345678901234567890'
       }
       return addressMap[symbol.toUpperCase()] || addressMap['USDC']
     }

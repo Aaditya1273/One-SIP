@@ -5,12 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { TrendingUp, DollarSign, Wallet, RefreshCw, ExternalLink, AlertTriangle, Shield } from "lucide-react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { TrendingUp, DollarSign, Wallet, RefreshCw, ExternalLink, AlertTriangle, Shield, BarChart3, Check } from "lucide-react"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 import { useState, useEffect } from "react"
 
 export default function PortfolioPage() {
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
+  const address = currentAccount?.address
+  const isConnected = !!currentAccount
   const [portfolioData, setPortfolioData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -67,7 +69,7 @@ export default function PortfolioPage() {
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold">Portfolio Overview</h1>
-            <p className="text-muted-foreground">Real-time view of your DeFi investments on Stellar blockchain</p>
+            <p className="text-muted-foreground">Real-time view of your DeFi investments on OneChain blockchain</p>
           </div>
 
           <Card className="bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-0">
@@ -75,7 +77,7 @@ export default function PortfolioPage() {
               <Wallet className="h-20 w-20 text-muted-foreground mb-6" />
               <h3 className="text-2xl font-semibold mb-4">Connect Wallet Required</h3>
               <p className="text-muted-foreground mb-8 max-w-md">
-                Connect your wallet to view your real portfolio data from Stellar blockchain
+                Connect your wallet to view your real portfolio data from OneChain blockchain
               </p>
               <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
                 100% Real Blockchain Data
@@ -93,7 +95,7 @@ export default function PortfolioPage() {
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold">Portfolio Overview</h1>
-            <p className="text-muted-foreground">Loading real portfolio data from Stellar blockchain...</p>
+            <p className="text-muted-foreground">Loading real portfolio data from OneChain blockchain...</p>
           </div>
 
           <Card>
@@ -110,18 +112,44 @@ export default function PortfolioPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        {/* Header with Wallet Address */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Portfolio Overview</h1>
-            <p className="text-muted-foreground">Real-time view of your DeFi investments</p>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-muted-foreground">Connected Wallet</p>
-            <p className="font-mono text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              {address?.slice(0, 6)}...{address?.slice(-4)}
-            </p>
+      <div className="space-y-8">
+        {/* Hero Section - Landing Page Style */}
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50/50 via-white to-purple-50/30 p-12 border border-blue-100/50 shadow-xl">
+          <div className="space-y-6">
+            {/* Trust Badge */}
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full">
+              <BarChart3 className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-medium text-blue-900">Real-Time Analytics</span>
+            </div>
+
+            {/* Main Headline */}
+            <div className="space-y-4">
+              <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+                Portfolio
+                <br />
+                <span className="text-slate-600">Track & Grow</span>
+              </h1>
+              
+              <p className="text-lg lg:text-xl text-slate-600 leading-relaxed max-w-2xl">
+                Real-time view of your DeFi investments on OneChain. Monitor performance, track yields, and optimize your strategy.
+              </p>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex items-center space-x-8 pt-4">
+              <div className="flex items-center space-x-2">
+                <Check className="w-5 h-5 text-[#00D382]" />
+                <span className="text-sm text-slate-600">Live data</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="w-5 h-5 text-[#00D382]" />
+                <span className="text-sm text-slate-600">On-chain verified</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="w-5 h-5 text-[#00D382]" />
+                <span className="text-sm text-slate-600">Transparent</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -136,7 +164,7 @@ export default function PortfolioPage() {
                     <DollarSign className="h-5 w-5 text-primary" />
                     Portfolio Summary
                   </CardTitle>
-                  <CardDescription>Real-time portfolio metrics from Stellar</CardDescription>
+                  <CardDescription>Real-time portfolio metrics from OneChain</CardDescription>
                 </div>
                 <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">
                   Live Data
@@ -147,11 +175,11 @@ export default function PortfolioPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground">Total Value</p>
-                  <p className="text-3xl font-bold text-primary">{portfolioData?.totalValue || "0.00"} XLM</p>
+                  <p className="text-3xl font-bold text-primary">{portfolioData?.totalValue || "0.00"} OCT</p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground">Total Return</p>
-                  <p className="text-3xl font-bold text-green-600">{portfolioData?.totalReturn || "0.00"} XLM</p>
+                  <p className="text-3xl font-bold text-green-600">{portfolioData?.totalReturn || "0.00"} OCT</p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground">Active SIPs</p>
@@ -203,7 +231,7 @@ export default function PortfolioPage() {
                     </DialogHeader>
                     <div className="space-y-4">
                       <p className="text-muted-foreground">
-                        Sync your portfolio with the latest blockchain data from Stellar network
+                        Sync your portfolio with the latest blockchain data from OneChain network
                       </p>
                       <div className="bg-muted/50 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
@@ -211,7 +239,7 @@ export default function PortfolioPage() {
                           <span className="font-medium text-sm">Syncing...</span>
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          Fetching latest data from Stellar blockchain contracts
+                          Fetching latest data from OneChain blockchain contracts
                         </p>
                       </div>
                     </div>
@@ -234,14 +262,16 @@ export default function PortfolioPage() {
                     </DialogHeader>
                     <div className="space-y-4">
                       <p className="text-muted-foreground">
-                        View your wallet transactions on Stellar blockchain explorer
+                        View your wallet transactions on OneChain blockchain explorer
                       </p>
                       <div className="bg-muted/50 rounded-lg p-4">
                         <p className="font-mono text-sm mb-2">Wallet Address:</p>
                         <p className="font-mono text-sm text-primary break-all">{address}</p>
                       </div>
-                      <Button className="w-full" disabled>
-                        Open Stellar Explorer
+                      <Button className="w-full" asChild>
+                        <a href={`https://explorer.onechain.network/address/${address}`} target="_blank" rel="noopener noreferrer">
+                          Open OneChain Explorer
+                        </a>
                       </Button>
                     </div>
                   </DialogContent>
@@ -287,7 +317,7 @@ export default function PortfolioPage() {
               <div>
                 <p className="font-medium text-green-600 mb-1">100% Real Blockchain Data</p>
                 <p className="text-sm text-muted-foreground">
-                  All portfolio data is fetched directly from Stellar blockchain contracts. No fake or mock data is displayed. 
+                  All portfolio data is fetched directly from OneChain blockchain contracts. No fake or mock data is displayed. 
                   Your real investments and returns will appear here when you start using DeFi protocols.
                 </p>
               </div>

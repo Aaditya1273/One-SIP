@@ -4,19 +4,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { TrendingUp, Shield, AlertTriangle, ExternalLink, Wallet, Search } from "lucide-react"
-import { useAccount } from "@/lib/onechain-wallet"
+import { TrendingUp, Shield, ExternalLink, Wallet, Search } from "lucide-react"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 import { useState, useEffect } from "react"
 
 export function YieldPools() {
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
   const [realPools, setRealPools] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   // Fetch real pool data from blockchain
   useEffect(() => {
     const fetchRealPools = async () => {
-      if (!isConnected || !address) {
+      if (!currentAccount) {
         setLoading(false)
         return
       }
@@ -35,9 +35,9 @@ export function YieldPools() {
     }
 
     fetchRealPools()
-  }, [address, isConnected])
+  }, [currentAccount])
 
-  if (!isConnected) {
+  if (!currentAccount) {
     return (
       <Card className="bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-0">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
@@ -95,7 +95,7 @@ export function YieldPools() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Scanning Wallet</p>
-              <p className="font-mono text-sm">{address?.slice(0, 6)}...{address?.slice(-4)}</p>
+              <p className="font-mono text-sm">{currentAccount?.address?.slice(0, 6)}...{currentAccount?.address?.slice(-4)}</p>
             </div>
             <div className="text-right">
               <p className="text-sm text-muted-foreground">Pools Found</p>

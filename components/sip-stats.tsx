@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/onechain-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TrendingUp, Calendar, DollarSign, Target, Loader2 } from "lucide-react"
 
@@ -14,20 +14,20 @@ export function SIPStats() {
     averageProgress: 0
   })
   const [loading, setLoading] = useState(true)
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
 
   useEffect(() => {
-    if (isConnected && address) {
+    if (currentAccount) {
       fetchSIPStats()
     } else {
       setLoading(false)
     }
-  }, [isConnected, address])
+  }, [currentAccount])
 
   const fetchSIPStats = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/sips?userAddress=${address}`)
+      const response = await fetch(`/api/sips?userAddress=${currentAccount?.address}`)
       const result = await response.json()
       
       if (result.success) {
@@ -116,7 +116,7 @@ export function SIPStats() {
     },
   ]
 
-  if (!isConnected) {
+  if (!currentAccount) {
     return (
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[1, 2, 3, 4].map((i) => (

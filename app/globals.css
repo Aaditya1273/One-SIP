@@ -4,102 +4,128 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated color tokens to match DeFi platform design brief */
-  --background: oklch(0.97 0.01 120); /* Light gray background */
-  --foreground: oklch(0.35 0.02 240); /* Dark gray text */
-  --card: oklch(1 0 0); /* White cards */
-  --card-foreground: oklch(0.35 0.02 240); /* Dark gray card text */
-  --popover: oklch(1 0 0); /* White popovers */
-  --popover-foreground: oklch(0.35 0.02 240); /* Dark gray popover text */
-  --primary: oklch(0.45 0.15 160); /* Emerald green primary */
-  --primary-foreground: oklch(1 0 0); /* White text on primary */
-  --secondary: oklch(0.55 0.12 160); /* Bright emerald secondary */
-  --secondary-foreground: oklch(1 0 0); /* White text on secondary */
-  --muted: oklch(0.97 0.01 120); /* Light gray muted */
-  --muted-foreground: oklch(0.35 0.02 240); /* Dark gray muted text */
-  --accent: oklch(0.55 0.12 160); /* Bright emerald accent */
-  --accent-foreground: oklch(1 0 0); /* White accent text */
-  --destructive: oklch(0.55 0.18 25); /* Orange destructive */
-  --destructive-foreground: oklch(1 0 0); /* White destructive text */
-  --border: oklch(0.92 0.01 120); /* Light gray borders */
-  --input: oklch(1 0 0); /* White inputs */
-  --ring: oklch(0.45 0.15 160); /* Emerald focus rings */
-  --chart-1: oklch(0.45 0.15 160); /* Emerald chart color */
-  --chart-2: oklch(0.55 0.12 160); /* Bright emerald chart color */
-  --chart-3: oklch(0.35 0.18 25); /* Orange chart color */
-  --chart-4: oklch(0.65 0.15 200); /* Blue chart color */
-  --chart-5: oklch(0.75 0.12 280); /* Purple chart color */
-  --radius: 0.5rem;
-  --sidebar: oklch(1 0 0); /* White sidebar */
-  --sidebar-foreground: oklch(0.35 0.02 240); /* Dark gray sidebar text */
-  --sidebar-primary: oklch(0.45 0.15 160); /* Emerald sidebar primary */
-  --sidebar-primary-foreground: oklch(1 0 0); /* White sidebar primary text */
-  --sidebar-accent: oklch(0.55 0.12 160); /* Bright emerald sidebar accent */
-  --sidebar-accent-foreground: oklch(1 0 0); /* White sidebar accent text */
-  --sidebar-border: oklch(0.92 0.01 120); /* Light gray sidebar borders */
-  --sidebar-ring: oklch(0.45 0.15 160); /* Emerald sidebar focus rings */
+  /* �  Sphira Design System - Trust, Growth, Innovation */
   
-  /* ✨ Enhanced Visual Effects */
-  --glow-primary: 0 0 20px oklch(0.45 0.15 160 / 0.3);
-  --glow-secondary: 0 0 15px oklch(0.55 0.12 160 / 0.25);
-  --glow-accent: 0 0 25px oklch(0.55 0.12 160 / 0.4);
-  --glow-success: 0 0 20px oklch(0.6 0.15 140 / 0.3);
-  --glow-warning: 0 0 20px oklch(0.7 0.15 60 / 0.3);
-  --glow-error: 0 0 20px oklch(0.55 0.18 25 / 0.3);
+  /* Core Colors - Sphira Palette */
+  --background: 248 250 252; /* #F8FAFC - Soft background */
+  --foreground: 30 41 59; /* #1E293B - Dark slate text */
   
-  /* Gradient Variables */
-  --gradient-primary: linear-gradient(135deg, oklch(0.45 0.15 160), oklch(0.55 0.12 160));
-  --gradient-card: linear-gradient(135deg, oklch(1 0 0), oklch(0.98 0.01 120));
-  --gradient-glow: radial-gradient(circle at center, oklch(0.55 0.12 160 / 0.1), transparent 70%);
+  /* Cards & Surfaces */
+  --card: 255 255 255; /* #FFFFFF - Pure white cards */
+  --card-foreground: 30 41 59; /* Dark slate text */
+  --popover: 255 255 255; /* White popovers */
+  --popover-foreground: 30 41 59; /* Dark slate text */
+  
+  /* Primary - Deep Trust Blue (#0A3D62) */
+  --primary: 10 61 98; /* #0A3D62 - Deep Trust Blue */
+  --primary-foreground: 255 255 255; /* White text on blue */
+  --primary-hover: 37 99 235; /* #2563EB - Hover state */
+  
+  /* Secondary - Light Blue Tint */
+  --secondary: 241 245 249; /* #F1F5F9 - Very light blue background */
+  --secondary-foreground: 30 41 59; /* Dark text on light bg */
+  
+  /* Muted - Subtle Backgrounds */
+  --muted: 248 250 252; /* #F8FAFC - Soft background */
+  --muted-foreground: 100 116 139; /* #64748B - Slate gray for body text */
+  
+  /* Accent - Turquoise Innovation (#06B6D4) */
+  --accent: 6 182 212; /* #06B6D4 - Turquoise Innovation */
+  --accent-foreground: 255 255 255; /* White text */
+  
+  /* Success - Growth Green (#10B981) */
+  --success: 16 185 129; /* #10B981 - Growth Green */
+  --success-light: 52 211 153; /* #34D399 - Light variant */
+  --success-foreground: 255 255 255; /* White text */
+  
+  /* Warning - Gold Rewards (#F59E0B) */
+  --warning: 245 158 11; /* #F59E0B - Gold/Yellow Rewards */
+  --warning-foreground: 255 255 255; /* White text */
+  
+  /* Destructive - Clean Red */
+  --destructive: 239 68 68; /* #EF4444 - Red for errors */
+  --destructive-foreground: 255 255 255; /* White text on red */
+  
+  /* Borders & Inputs */
+  --border: 226 232 240; /* #E2E8F0 - Light slate border */
+  --input: 226 232 240; /* Light slate input borders */
+  --ring: 10 61 98; /* Deep Trust Blue focus ring */
+  
+  /* Border Radius */
+  --radius: 0.75rem;
+  
+  /* Chart Colors - Sphira Palette */
+  --chart-1: 10 61 98; /* Deep Trust Blue */
+  --chart-2: 16 185 129; /* Growth Green */
+  --chart-3: 6 182 212; /* Turquoise Innovation */
+  --chart-4: 245 158 11; /* Gold Rewards */
+  --chart-5: 139 92 246; /* Purple accent */
+  
+  /* Success States */
+  --success-bg: 236 253 245; /* #ECFDF5 - Light green background */
+  --success-text: 16 185 129; /* Growth Green text */
+  
+  /* Sidebar */
+  --sidebar: 255 255 255; /* White sidebar */
+  --sidebar-foreground: 30 41 59; /* Dark text */
+  --sidebar-primary: 10 61 98; /* Deep Trust Blue */
+  --sidebar-primary-foreground: 255 255 255; /* White text */
+  --sidebar-accent: 248 250 252; /* Soft background */
+  --sidebar-accent-foreground: 30 41 59; /* Dark text */
+  --sidebar-border: 226 232 240; /* Light border */
+  --sidebar-ring: 10 61 98; /* Deep Trust Blue focus */
 }
 
 .dark {
-  /* Updated dark mode tokens for professional DeFi look */
-  --background: oklch(0.08 0.01 240); /* Very dark background */
-  --foreground: oklch(0.95 0.01 120); /* Light text */
-  --card: oklch(0.12 0.01 240); /* Dark cards */
-  --card-foreground: oklch(0.95 0.01 120); /* Light card text */
-  --popover: oklch(0.12 0.01 240); /* Dark popovers */
-  --popover-foreground: oklch(0.95 0.01 120); /* Light popover text */
-  --primary: oklch(0.55 0.12 160); /* Bright emerald primary */
-  --primary-foreground: oklch(0.08 0.01 240); /* Dark text on primary */
-  --secondary: oklch(0.18 0.02 240); /* Dark secondary */
-  --secondary-foreground: oklch(0.95 0.01 120); /* Light secondary text */
-  --muted: oklch(0.18 0.02 240); /* Dark muted */
-  --muted-foreground: oklch(0.65 0.01 120); /* Medium gray muted text */
-  --accent: oklch(0.55 0.12 160); /* Bright emerald accent */
-  --accent-foreground: oklch(0.08 0.01 240); /* Dark accent text */
-  --destructive: oklch(0.55 0.18 25); /* Orange destructive */
-  --destructive-foreground: oklch(1 0 0); /* White destructive text */
-  --border: oklch(0.18 0.02 240); /* Dark borders */
-  --input: oklch(0.18 0.02 240); /* Dark inputs */
-  --ring: oklch(0.55 0.12 160); /* Bright emerald focus rings */
-  --chart-1: oklch(0.55 0.12 160); /* Bright emerald chart */
-  --chart-2: oklch(0.65 0.15 200); /* Blue chart */
-  --chart-3: oklch(0.75 0.12 280); /* Purple chart */
-  --chart-4: oklch(0.55 0.18 25); /* Orange chart */
-  --chart-5: oklch(0.65 0.15 320); /* Pink chart */
-  --sidebar: oklch(0.12 0.01 240); /* Dark sidebar */
-  --sidebar-foreground: oklch(0.95 0.01 120); /* Light sidebar text */
-  --sidebar-primary: oklch(0.55 0.12 160); /* Bright emerald sidebar primary */
-  --sidebar-primary-foreground: oklch(0.08 0.01 240); /* Dark sidebar primary text */
-  --sidebar-accent: oklch(0.18 0.02 240); /* Dark sidebar accent */
-  --sidebar-accent-foreground: oklch(0.95 0.01 120); /* Light sidebar accent text */
-  --sidebar-border: oklch(0.18 0.02 240); /* Dark sidebar borders */
-  --sidebar-ring: oklch(0.55 0.12 160); /* Bright emerald sidebar focus rings */
+  /* Dark Mode - Maintain Groww's Clean Feel */
+  --background: 15 23 42; /* #0F172A - Dark slate */
+  --foreground: 248 250 252; /* #F8FAFC - Light text */
   
-  /* ✨ Enhanced Dark Mode Visual Effects */
-  --glow-primary: 0 0 30px oklch(0.55 0.12 160 / 0.5);
-  --glow-secondary: 0 0 25px oklch(0.55 0.12 160 / 0.4);
-  --glow-accent: 0 0 35px oklch(0.55 0.12 160 / 0.6);
-  --glow-success: 0 0 25px oklch(0.6 0.15 140 / 0.5);
-  --glow-warning: 0 0 25px oklch(0.7 0.15 60 / 0.5);
-  --glow-error: 0 0 25px oklch(0.55 0.18 25 / 0.5);
+  --card: 30 41 59; /* #1E293B - Dark card */
+  --card-foreground: 248 250 252; /* Light text */
+  --popover: 30 41 59; /* Dark popover */
+  --popover-foreground: 248 250 252; /* Light text */
   
-  /* Dark Mode Gradients */
-  --gradient-primary: linear-gradient(135deg, oklch(0.55 0.12 160), oklch(0.65 0.15 160));
-  --gradient-card: linear-gradient(135deg, oklch(0.12 0.01 240), oklch(0.15 0.02 240));
-  --gradient-glow: radial-gradient(circle at center, oklch(0.55 0.12 160 / 0.15), transparent 70%);
+  --primary: 0 211 130; /* Keep Groww green */
+  --primary-foreground: 255 255 255; /* White text */
+  --primary-hover: 0 189 116; /* Darker on hover */
+  
+  --secondary: 30 41 59; /* Dark secondary */
+  --secondary-foreground: 248 250 252; /* Light text */
+  
+  --muted: 30 41 59; /* Dark muted */
+  --muted-foreground: 148 163 184; /* #94A3B8 - Lighter gray */
+  
+  --accent: 0 211 130; /* Groww green */
+  --accent-foreground: 255 255 255; /* White text */
+  
+  --destructive: 239 68 68; /* Red */
+  --destructive-foreground: 255 255 255; /* White text */
+  
+  --border: 51 65 85; /* #334155 - Darker border */
+  --input: 51 65 85; /* Darker input border */
+  --ring: 0 211 130; /* Groww green focus */
+  
+  --trust: 10 61 98; /* Deep navy */
+  --trust-accent: 6 182 212; /* Turquoise */
+  
+  --chart-1: 0 211 130; /* Groww green */
+  --chart-2: 6 182 212; /* Turquoise */
+  --chart-3: 99 102 241; /* Indigo */
+  --chart-4: 245 158 11; /* Amber */
+  --chart-5: 236 72 153; /* Pink */
+  
+  --success-bg: 6 78 59; /* #064E3B - Dark green bg */
+  --success-text: 0 211 130; /* Groww green text */
+  
+  --sidebar: 30 41 59; /* Dark sidebar */
+  --sidebar-foreground: 248 250 252; /* Light text */
+  --sidebar-primary: 0 211 130; /* Groww green */
+  --sidebar-primary-foreground: 255 255 255; /* White text */
+  --sidebar-accent: 51 65 85; /* Dark accent */
+  --sidebar-accent-foreground: 248 250 252; /* Light text */
+  --sidebar-border: 51 65 85; /* Dark border */
+  --sidebar-ring: 0 211 130; /* Groww green focus */
 }
 
 @theme inline {
@@ -147,362 +173,54 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-background text-foreground;
-    /* Smooth transitions for theme switching */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* ✨ ENHANCED VISUAL EFFECTS & ANIMATIONS */
+/* 🎨 Groww-Inspired Utilities */
 @layer utilities {
-  /* Glowing Effects */
-  .glow-primary {
-    box-shadow: var(--glow-primary);
-    transition: box-shadow 0.3s ease;
+  /* Groww Green Button */
+  .btn-groww {
+    @apply bg-[rgb(var(--primary))] text-white font-semibold px-6 py-3 rounded-xl;
+    @apply hover:bg-[rgb(var(--primary-hover))] transition-all duration-200;
+    @apply shadow-sm hover:shadow-md;
   }
   
-  .glow-secondary {
-    box-shadow: var(--glow-secondary);
-    transition: box-shadow 0.3s ease;
+  /* Success Card (like Groww's SIP execution cards) */
+  .card-success {
+    @apply bg-[rgb(var(--success-bg))] border border-[rgb(var(--primary))]/20;
+    @apply rounded-xl p-4;
   }
   
-  .glow-accent {
-    box-shadow: var(--glow-accent);
-    transition: box-shadow 0.3s ease;
+  /* Clean Shadow (minimal like Groww) */
+  .shadow-groww {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
   }
   
-  .glow-success {
-    box-shadow: var(--glow-success);
+  .shadow-groww-lg {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   }
   
-  .glow-warning {
-    box-shadow: var(--glow-warning);
-  }
-  
-  .glow-error {
-    box-shadow: var(--glow-error);
-  }
-  
-  /* Hover Glow Effects */
-  .hover-glow-primary:hover {
-    box-shadow: var(--glow-primary), 0 0 40px oklch(0.55 0.12 160 / 0.2);
-    transform: translateY(-2px);
-    transition: all 0.3s ease;
-  }
-  
-  .hover-glow-accent:hover {
-    box-shadow: var(--glow-accent), 0 0 50px oklch(0.55 0.12 160 / 0.3);
-    transform: translateY(-2px);
-    transition: all 0.3s ease;
-  }
-  
-  /* Gradient Backgrounds */
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
-  }
-  
-  .bg-gradient-card {
-    background: var(--gradient-card);
-  }
-  
-  .bg-gradient-glow {
-    background: var(--gradient-glow);
-  }
-  
-  /* Enhanced Card Effects */
-  .card-enhanced {
-    background: var(--gradient-card);
-    border: 1px solid oklch(0.55 0.12 160 / 0.2);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .card-enhanced::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--gradient-glow);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-  
-  .card-enhanced:hover::before {
-    opacity: 1;
-  }
-  
-  .card-enhanced:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--glow-primary), 0 10px 25px oklch(0 0 0 / 0.1);
-    border-color: oklch(0.55 0.12 160 / 0.4);
-  }
-  
-  /* Animated Borders */
-  .border-animated {
-    position: relative;
-    background: var(--gradient-card);
-    border: 1px solid transparent;
-  }
-  
-  .border-animated::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: linear-gradient(45deg, oklch(0.55 0.12 160), oklch(0.65 0.15 200), oklch(0.75 0.12 280), oklch(0.55 0.12 160));
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    animation: border-spin 3s linear infinite;
-  }
-  
-  @keyframes border-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* Pulse Animations */
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite alternate;
-  }
-  
-  @keyframes pulse-glow {
-    from {
-      box-shadow: var(--glow-primary);
-    }
-    to {
-      box-shadow: var(--glow-accent);
-    }
-  }
-  
-  /* Floating Animation */
-  .float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  /* Shimmer Effect */
-  .shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .shimmer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      oklch(0.55 0.12 160 / 0.2),
-      transparent
-    );
-    animation: shimmer 2s infinite;
-  }
-  
-  @keyframes shimmer {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-  
-  /* Enhanced Buttons */
-  .btn-enhanced {
-    background: var(--gradient-primary);
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .btn-enhanced::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      oklch(1 0 0 / 0.2),
-      transparent
-    );
-    transition: left 0.5s;
-  }
-  
-  .btn-enhanced:hover::before {
-    left: 100%;
-  }
-  
-  .btn-enhanced:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glow-primary), 0 8px 25px oklch(0.55 0.12 160 / 0.3);
-  }
-  
-  /* Glass Morphism Effect */
-  .glass {
-    background: oklch(1 0 0 / 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid oklch(1 0 0 / 0.2);
-  }
-  
-  .dark .glass {
-    background: oklch(0 0 0 / 0.2);
-    border: 1px solid oklch(1 0 0 / 0.1);
-  }
-  
-  /* Neon Text Effect */
-  .text-neon {
-    color: oklch(0.55 0.12 160);
-    text-shadow: 
-      0 0 5px oklch(0.55 0.12 160 / 0.5),
-      0 0 10px oklch(0.55 0.12 160 / 0.3),
-      0 0 15px oklch(0.55 0.12 160 / 0.2);
-    animation: neon-flicker 2s ease-in-out infinite alternate;
-  }
-  
-  @keyframes neon-flicker {
-    0%, 100% {
-      text-shadow: 
-        0 0 5px oklch(0.55 0.12 160 / 0.5),
-        0 0 10px oklch(0.55 0.12 160 / 0.3),
-        0 0 15px oklch(0.55 0.12 160 / 0.2);
-    }
-    50% {
-      text-shadow: 
-        0 0 2px oklch(0.55 0.12 160 / 0.3),
-        0 0 5px oklch(0.55 0.12 160 / 0.2),
-        0 0 8px oklch(0.55 0.12 160 / 0.1);
-    }
-  }
-  
-  /* Smooth Transitions */
-  .transition-all {
-    transition: all 0.3s ease;
-  }
-  
-  .transition-smooth {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Scale on Hover */
-  .hover-scale:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-  }
-  
-  /* Rotate on Hover */
-  .hover-rotate:hover {
-    transform: rotate(5deg);
-    transition: transform 0.3s ease;
+  /* Trust Badge (Navy + Turquoise) */
+  .badge-trust {
+    @apply bg-[rgb(var(--trust))] text-[rgb(var(--trust-accent))];
+    @apply px-3 py-1 rounded-full text-sm font-medium;
   }
 }
 
-/* 🎨 RainbowKit Custom Styling - Green Theme */
+/* Dialog Overlay - Solid backdrop */
 @layer components {
-  /* Override RainbowKit Connect Button to Green */
-  [data-rk] button[data-testid="rk-connect-button"] {
-    background: oklch(0.55 0.12 160) !important;
-    background-image: linear-gradient(135deg, oklch(0.55 0.12 160), oklch(0.45 0.15 160)) !important;
-    border: none !important;
-    color: white !important;
-    font-weight: 600 !important;
-    padding: 12px 24px !important;
-    border-radius: 12px !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px oklch(0.55 0.12 160 / 0.3) !important;
-  }
-  
-  [data-rk] button[data-testid="rk-connect-button"]:hover {
-    background: oklch(0.45 0.15 160) !important;
-    background-image: linear-gradient(135deg, oklch(0.45 0.15 160), oklch(0.35 0.18 160)) !important;
-    transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 0 8px 25px oklch(0.55 0.12 160 / 0.4) !important;
-  }
-  
-  /* RainbowKit Modal Styling */
-  [data-rk] [data-rk="modalBackdrop"] {
-    backdrop-filter: blur(10px) !important;
-  }
-  
-  [data-rk] [data-rk="modal"] {
-    background: var(--card) !important;
-    border: 1px solid oklch(0.55 0.12 160 / 0.2) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 20px 40px oklch(0 0 0 / 0.1), 0 0 30px oklch(0.55 0.12 160 / 0.1) !important;
-  }
-  
-  /* RainbowKit Wallet Options */
-  [data-rk] button[data-testid*="rk-wallet-option"] {
-    border: 1px solid var(--border) !important;
-    background: var(--card) !important;
-    border-radius: 12px !important;
-    transition: all 0.3s ease !important;
-  }
-  
-  [data-rk] button[data-testid*="rk-wallet-option"]:hover {
-    border-color: oklch(0.55 0.12 160 / 0.4) !important;
-    background: oklch(0.55 0.12 160 / 0.05) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px oklch(0.55 0.12 160 / 0.1) !important;
-  }
-  
-  /* RainbowKit Account Button (when connected) */
-  [data-rk] button[data-testid="rk-account-button"] {
-    background: oklch(0.55 0.12 160 / 0.1) !important;
-    border: 1px solid oklch(0.55 0.12 160 / 0.2) !important;
-    color: oklch(0.55 0.12 160) !important;
-    border-radius: 12px !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
-  }
-  
-  [data-rk] button[data-testid="rk-account-button"]:hover {
-    background: oklch(0.55 0.12 160 / 0.15) !important;
-    border-color: oklch(0.55 0.12 160 / 0.3) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px oklch(0.55 0.12 160 / 0.2) !important;
-  }
-  
-  /* RainbowKit Chain Button */
-  [data-rk] button[data-testid="rk-chain-button"] {
-    background: oklch(0.55 0.12 160) !important;
-    border: none !important;
-    color: white !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
-  }
-  
-  [data-rk] button[data-testid="rk-chain-button"]:hover {
-    background: oklch(0.45 0.15 160) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px oklch(0.55 0.12 160 / 0.3) !important;
+  [data-radix-dialog-overlay] {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(4px);
   }
 }

@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { blockchainService } from "@/lib/blockchain-service"
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,10 +9,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: "User address required" }, { status: 400 })
     }
 
-    // Get real vault data from blockchain
-    const blockchainLocks = await blockchainService.getUserLocks(userAddress)
-    
-    // Also get locks from temporary storage (for demo purposes)
+    // Get locks from temporary storage
     const tempLocks = JSON.parse((global as any).tempLockStorage || '[]')
     const userTempLocks = tempLocks.map((lock: any) => ({
       id: lock.id,
@@ -23,8 +19,7 @@ export async function GET(request: NextRequest) {
       status: Date.now() < lock.unlockTime ? 'LOCKED' : 'UNLOCKED'
     }))
     
-    // Combine blockchain and temporary locks
-    const allLocks = [...blockchainLocks, ...userTempLocks]
+    const allLocks = userTempLocks
     
     // Calculate total locked value
     const totalLocked = allLocks.reduce((sum, lock) => sum + parseFloat(lock.amount), 0)
@@ -34,7 +29,7 @@ export async function GET(request: NextRequest) {
       locks: allLocks.map(lock => ({
         id: lock.id,
         token: lock.token === process.env.NEXT_PUBLIC_USDC_ADDRESS ? 'USDC' : 
-               lock.token === process.env.NEXT_PUBLIC_ETH_ADDRESS ? 'ETH' : 'XLM',
+               lock.token === process.env.NEXT_PUBLIC_ETH_ADDRESS ? 'ETH' : 'OCT',
         amount: lock.amount,
         unlockTime: lock.unlockTime,
         status: lock.status

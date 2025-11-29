@@ -4,14 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { AlertCircle, Copy, Check } from "lucide-react"
 import { useState } from "react"
-import { useAccount } from "@/lib/onechain-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 
 export function FuturenetSetup() {
   const [copied, setCopied] = useState(false)
-  const { isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
   
   // Don't show if already connected
-  if (isConnected) return null
+  if (currentAccount) return null
   
   const testnetConfig = {
     name: "OneChain Testnet",
@@ -81,15 +81,15 @@ export function FuturenetSetup() {
           </div>
 
           <div>
-            <p className="text-xs text-muted-foreground mb-1">Network Passphrase:</p>
+            <p className="text-xs text-muted-foreground mb-1">Faucet URL:</p>
             <div className="flex items-center gap-2">
               <code className="text-sm flex-1 bg-background px-2 py-1 rounded break-all">
-                {futurenetConfig.networkPassphrase}
+                {testnetConfig.faucetUrl}
               </code>
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => copyToClipboard(futurenetConfig.networkPassphrase)}
+                onClick={() => copyToClipboard(testnetConfig.faucetUrl)}
               >
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>

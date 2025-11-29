@@ -34,14 +34,16 @@ import {
   Copy
 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useAccount, useDisconnect } from "@/lib/stellar-wallet"
+import { useCurrentAccount, useDisconnectWallet } from "@mysten/dapp-kit"
 
 export default function SettingsPage() {
-  const { address, isConnected } = useAccount()
-  const { disconnect } = useDisconnect()
+  const currentAccount = useCurrentAccount()
+  const { mutate: disconnect } = useDisconnectWallet()
+  const address = currentAccount?.address
+  const isConnected = !!currentAccount
   const [theme, setTheme] = useState("system")
   const [language, setLanguage] = useState("en")
-  const [currency, setCurrency] = useState("XLM")
+  const [currency, setCurrency] = useState("OCT")
   const [pushNotifications, setPushNotifications] = useState(true)
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [autoRebalance, setAutoRebalance] = useState(true)
@@ -207,7 +209,7 @@ export default function SettingsPage() {
                         <SelectValue placeholder="Select currency" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="XLM">XLM (◎)</SelectItem>
+                        <SelectItem value="OCT">OCT (◎)</SelectItem>
                         <SelectItem value="USD">USD ($)</SelectItem>
                         <SelectItem value="EUR">EUR (€)</SelectItem>
                         <SelectItem value="GBP">GBP (£)</SelectItem>
@@ -629,7 +631,7 @@ export default function SettingsPage() {
                           <div className="bg-yellow-500/10 rounded-lg p-4 border border-yellow-500/20">
                             <p className="text-sm text-yellow-600 font-medium">Settings to be reset:</p>
                             <ul className="text-sm text-muted-foreground mt-2 space-y-1">
-                              <li>• Currency: Back to XLM</li>
+                              <li>• Currency: Back to OCT</li>
                               <li>• Theme: Back to System</li>
                               <li>• Notifications: Back to enabled</li>
                               <li>• Trading preferences: Back to defaults</li>
@@ -704,7 +706,7 @@ export default function SettingsPage() {
                 <p className="font-medium text-purple-600 mb-1">100% Real User Settings</p>
                 <p className="text-sm text-muted-foreground">
                   All settings are connected to your real wallet address. Currency changes affect the entire app globally.
-                  XLM is the default currency for Stellar blockchain. No fake wallet addresses or mock data is displayed.
+                  OCT is the default currency for OneChain blockchain. No fake wallet addresses or mock data is displayed.
                 </p>
               </div>
             </div>
@@ -761,7 +763,7 @@ export default function SettingsPage() {
               <div className="text-center py-6">
                 <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-green-600">
-                    {currency === "XLM" ? "◎" : currency === "USD" ? "$" : currency === "EUR" ? "€" : currency === "BTC" ? "₿" : currency === "ETH" ? "Ξ" : currency}
+                    {currency === "OCT" ? "◎" : currency === "USD" ? "$" : currency === "EUR" ? "€" : currency === "BTC" ? "₿" : currency === "ETH" ? "Ξ" : currency}
                   </span>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Currency Changed to {currency}</h3>

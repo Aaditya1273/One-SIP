@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, TrendingDown, DollarSign, Zap, Lock, Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/onechain-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 
 type ChangeType = "positive" | "negative" | "neutral"
 
@@ -44,21 +44,21 @@ export function OverviewCards() {
     },
   ])
   const [loading, setLoading] = useState(true)
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
 
   useEffect(() => {
-    if (isConnected && address) {
+    if (currentAccount) {
       loadRealData()
     } else {
       setLoading(false)
     }
-  }, [isConnected, address])
+  }, [currentAccount])
 
   const loadRealData = async () => {
     try {
       setLoading(true)
       // Fetch real data from API with user address
-      const response = await fetch(`/api/portfolio?userAddress=${address}`)
+      const response = await fetch(`/api/portfolio?userAddress=${currentAccount?.address}`)
       const data = await response.json()
       
       if (data.success) {
@@ -107,24 +107,22 @@ export function OverviewCards() {
     }
   }
 
-  if (!isConnected) {
+  if (!currentAccount) {
     return (
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.title} className="relative overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
-              <stat.icon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">--</div>
-              <div className="flex items-center space-x-2 mt-1">
-                <Badge variant="secondary" className="text-xs">
-                  Connect Wallet
-                </Badge>
+          <Card key={stat.title} className="p-6 bg-white border border-slate-200 shadow-lg hover:shadow-xl transition-all">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm text-slate-600 font-medium">{stat.title}</span>
+              <stat.icon className="w-5 h-5 text-slate-400" />
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-slate-900">--</div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-slate-500">Connect Wallet</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Connect to view data</p>
-            </CardContent>
+              <p className="text-xs text-slate-500">Connect to view data</p>
+            </div>
           </Card>
         ))}
       </div>
@@ -132,35 +130,30 @@ export function OverviewCards() {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
-        <Card key={stat.title} className="relative overflow-hidden">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
-            <stat.icon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : stat.value}
+        <Card key={stat.title} className="p-6 bg-white border border-slate-200 shadow-lg hover:shadow-xl transition-all">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm text-slate-600 font-medium">{stat.title}</span>
+            <stat.icon className="w-5 h-5 text-[#00D382]" />
+          </div>
+          <div className="space-y-2">
+            <div className="text-3xl font-bold text-slate-900">
+              {loading ? <Loader2 className="h-8 w-8 animate-spin text-slate-400" /> : stat.value}
             </div>
-            <div className="flex items-center space-x-2 mt-1">
-              <Badge
-                variant={
-                  stat.changeType === "positive"
-                    ? "default"
-                    : stat.changeType === "negative"
-                      ? "destructive"
-                      : "secondary"
-                }
-                className="text-xs"
-              >
-                {stat.changeType === "positive" && <TrendingUp className="h-3 w-3 mr-1" />}
-                {stat.changeType === "negative" && <TrendingDown className="h-3 w-3 mr-1" />}
-                {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : stat.change}
-              </Badge>
+            <div className="flex items-center space-x-2">
+              {stat.changeType === "positive" && <TrendingUp className="h-4 w-4 text-[#00D382]" />}
+              {stat.changeType === "negative" && <TrendingDown className="h-4 w-4 text-red-500" />}
+              <span className={`text-sm font-semibold ${
+                stat.changeType === "positive" ? "text-[#00D382]" : 
+                stat.changeType === "negative" ? "text-red-500" : 
+                "text-slate-500"
+              }`}>
+                {loading ? <Loader2 className="h-4 w-4 animate-spin inline" /> : stat.change}
+              </span>
             </div>
-            <p className="text-xs text-muted-foreground mt-1">{stat.description}</p>
-          </CardContent>
+            <p className="text-xs text-slate-500">{stat.description}</p>
+          </div>
         </Card>
       ))}
     </div>

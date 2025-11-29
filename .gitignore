@@ -3,6 +3,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+package-lock.json
 
 # Lockfiles (use npm for deployment)
 pnpm-lock.yaml
@@ -11,41 +12,66 @@ yarn.lock
 # Testing
 coverage/
 .nyc_output/
+/test-results/
+/playwright-report/
+/playwright/.cache/
 
 # Next.js
 .next/
 out/
 build/
 .turbo/
+.swc/
 
 # Production
 dist/
+*.tgz
 
 # Environment variables
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*.local
+.env.development
+.env.test
+.env.production
+!.env.example
 
-# Vercel
+# Deployment
 .vercel
+.netlify
+.firebase
+.serverless
 
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+*.d.ts.map
 
-# IDE
+# IDE & Editors
 .vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
 .idea/
 *.swp
 *.swo
 *~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 *.tmp
+desktop.ini
 
 # Logs
 *.log
@@ -54,29 +80,115 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+logs/
+*.log.*
 
 # Database
 *.db
 *.sqlite
+*.sqlite3
 data/
 hackathon-db.json
+prisma/*.db
+prisma/*.db-journal
 
-# OneChain/Move
+# OneChain/Move Smart Contracts
 contracts/build/
 contracts/.move/
+contracts/target/
 *.mv
 *.blob
+*.sui
+.move/
 
 # Rust (if any)
 **/target/
 **/*.rs.bk
 Cargo.lock
+**/*.pdb
 
-# Coverage
+# Coverage & Testing
 coverage.json
 .coverage
+*.lcov
+.nyc_output/
+coverage/
+htmlcov/
+.pytest_cache/
+.tox/
 
-# Misc
-.cache/
+# Security & Secrets
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+secrets/
+.secrets/
+private/
+.private/
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+*.wasm
+
+# Temporary files
+*.tmp
+*.temp
 *.bak
 *.backup
+*.old
+*.orig
+*~
+.cache/
+tmp/
+temp/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Python (if using Python scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Local development
+.local/
+local/
+.dev/
+
+# Netlify
+.netlify/
+.netlify.toml.backup
+
+# Analytics & Monitoring
+.sentryclirc
+.lighthouseci/
+
+# Misc
+*.seed
+*.pid
+*.pid.lock
+.grunt
+.lock-wscript
+.npm
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.node_repl_history
+*.tgz
+.yarn-integrity
+.parcel-cache

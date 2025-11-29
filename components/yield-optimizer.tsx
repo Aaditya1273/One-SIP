@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Zap, TrendingUp, Shield, AlertTriangle, ExternalLink, Wallet } from "lucide-react"
-import { useAccount } from "@/lib/onechain-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 import { useState, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast"
 
 export function YieldOptimizer() {
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
   const [realData, setRealData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [riskDialogOpen, setRiskDialogOpen] = useState(false)
@@ -21,19 +21,19 @@ export function YieldOptimizer() {
   // Fetch real blockchain data
   useEffect(() => {
     const fetchRealYieldData = async () => {
-      if (!isConnected || !address) {
+      if (!currentAccount) {
         setLoading(false)
         return
       }
 
       try {
         // Fetch real yield data from API
-        const response = await fetch(`/api/yield/pools?userAddress=${address}`)
+        const response = await fetch(`/api/yield/pools?userAddress=${currentAccount.address}`)
         const result = await response.json()
         
         if (result.success) {
           setRealData({
-            connectedWallet: address,
+            connectedWallet: currentAccount.address,
             currentBalance: result.data.balance || "0.00",
             availablePools: result.data.pools || [],
             totalYield: result.data.totalYield || "0.00",
@@ -41,7 +41,7 @@ export function YieldOptimizer() {
           })
         } else {
           setRealData({
-            connectedWallet: address,
+            connectedWallet: currentAccount.address,
             currentBalance: "0.00",
             availablePools: [],
             totalYield: "0.00",
@@ -51,7 +51,7 @@ export function YieldOptimizer() {
       } catch (error) {
         console.error("Error fetching yield data:", error)
         setRealData({
-          connectedWallet: address,
+          connectedWallet: currentAccount.address,
           currentBalance: "0.00",
           availablePools: [],
           totalYield: "0.00",
@@ -63,7 +63,7 @@ export function YieldOptimizer() {
     }
 
     fetchRealYieldData()
-  }, [address, isConnected])
+  }, [currentAccount])
 
   // Handle risk selection with smooth professional animation
   const handleRiskSelection = async (riskType: string) => {
@@ -82,9 +82,9 @@ export function YieldOptimizer() {
     })
   }
 
-  if (!isConnected) {
+  if (!currentAccount) {
     return (
-      <Card className="bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-0">
+      <Card className="bg-white border border-slate-200 shadow-lg">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
           <Wallet className="h-16 w-16 text-muted-foreground mb-4" />
           <h3 className="text-xl font-semibold mb-2">Connect Wallet Required</h3>
@@ -142,11 +142,11 @@ export function YieldOptimizer() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Connected Wallet</p>
-                <p className="font-mono text-sm">{address?.slice(0, 6)}...{address?.slice(-4)}</p>
+                <p className="font-mono text-sm">{currentAccount?.address?.slice(0, 6)}...{currentAccount?.address?.slice(-4)}</p>
               </div>
               <div className="text-right">
                 <p className="text-sm text-muted-foreground">Current Yield</p>
-                <p className="text-lg font-bold text-primary">{realData?.totalYield || "0.00"} XLM</p>
+                <p className="text-lg font-bold text-primary">{realData?.totalYield || "0.00"} OCT</p>
               </div>
             </div>
           </div>

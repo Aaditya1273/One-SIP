@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useAccount, signAndExecuteTransaction } from "@/lib/onechain-wallet"
+import { useState } from "react"
+import { useCurrentAccount, useSignAndExecuteTransaction } from "@mysten/dapp-kit"
+import { Transaction } from "@mysten/sui/transactions"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,7 +20,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Plus, AlertTriangle, Wallet } from "lucide-react"
-import { formatEther, parseEther } from "viem"
 
 export function CreateSIPDialog() {
   const [open, setOpen] = useState(false)
@@ -35,28 +35,11 @@ export function CreateSIPDialog() {
   const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState("")
   
-  const { address, isConnected } = useAccount()
-  
-  // TODO: Implement Stellar balance fetching
-  // For now, we'll skip balance checks
-  const xlmBalance = null
-  const usdcBalance = null
-  const ethBalance = null
-  
-  // Placeholder for future Stellar balance implementation
-  /*
-  const { data: xlmBalance } = useStellarBalance({
-    address: address,
-  })
-  */
-
-  const getTokenBalance = (token: string) => {
-    // Balance checking disabled for now
-    return null
-  }
+  const currentAccount = useCurrentAccount()
+  const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction()
 
   const validateAmount = () => {
-    // Balance validation disabled for now - will be implemented with Stellar SDK
+    // Balance validation disabled for now - will be implemented with OneChain SDK
     if (!formData.token || !formData.amount) return true
     
     try {
@@ -73,7 +56,7 @@ export function CreateSIPDialog() {
   }
 
   const handleCreateSIP = async () => {
-    if (!isConnected) {
+    if (!currentAccount) {
       setError("Please connect your wallet first")
       return
     }
@@ -92,83 +75,88 @@ export function CreateSIPDialog() {
     setError("")
 
     try {
-      // Step 1: Get transaction XDR from API
-      const prepareResponse = await fetch('/api/sips', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          token: formData.token,
-          amount: formData.amount,
-          frequency: formData.frequency,
-          userAddress: address,
-          duration: formData.duration,
-          penalty: formData.penalty,
-          reason: formData.reason
-        }),
+      // Build OneChain transaction using @mysten/sui SDK
+      const tx = new Transaction()
+
+      // Get package ID from environment
+      const packageId = process.env.NEXT_PUBLIC_SIP_MANAGER_PACKAGE_ID!
+      
+      // Convert frequency to seconds
+      const frequencyMap: Record<string, number> = {
+        'daily': 86400,
+        'weekly': 604800,
+        'monthly': 2592000
+      }
+      const frequencySeconds = frequencyMap[formData.frequency] || 604800
+
+      // Convert amount to proper format (assuming 9 decimals for OCT)
+      const amountInSmallestUnit = Math.floor(parseFloat(formData.amount) * 1_000_000_000)
+
+      // OneChain shared Clock object ID (0x6 is the standard clock object)
+      const CLOCK_OBJECT_ID = '0x0000000000000000000000000000000000000000000000000000000000000006'
+
+      // Split coins for the initial payment
+      const [paymentCoin] = tx.splitCoins(tx.gas, [tx.pure.u64(amountInSmallestUnit)])
+
+      // Call create_sip function from SIP Manager contract with initial payment
+      const [sip] = tx.moveCall({
+        target: `${packageId}::sip_manager::create_sip`,
+        arguments: [
+          tx.pure.u64(amountInSmallestUnit), // amount_per_deposit
+          tx.pure.u64(frequencySeconds), // frequency in seconds
+          paymentCoin, // initial_payment (first deposit)
+          tx.object(CLOCK_OBJECT_ID), // clock object
+        ],
       })
 
-      const prepareResult = await prepareResponse.json()
+      // Transfer the created SIP to the user
+      tx.transferObjects([sip], tx.pure.address(currentAccount.address))
 
-      if (!prepareResult.success || !prepareResult.requiresSignature) {
-        setError(prepareResult.error || "Failed to prepare transaction")
-        return
-      }
-
-      // Step 2: Sign transaction with Freighter wallet
-      const signedXDR = await signTransaction(prepareResult.transactionXDR)
-
-      // Step 3: Submit signed transaction
-      const submitResponse = await fetch('/api/sips', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      // Sign and execute transaction
+      signAndExecuteTransaction(
+        {
+          transaction: tx as any,
         },
-        body: JSON.stringify({
-          name: formData.name,
-          token: formData.token,
-          amount: formData.amount,
-          frequency: formData.frequency,
-          userAddress: address,
-          duration: formData.duration,
-          penalty: formData.penalty,
-          reason: formData.reason,
-          signedXDR: signedXDR
-        }),
-      })
-
-      const result = await submitResponse.json()
-
-      if (result.success) {
-        // Log transaction hash
-        console.log('🎉 SIP CREATED SUCCESSFULLY!')
-        console.log('📝 Transaction Hash:', result.data.transactionHash)
-        console.log('🔗 View on Stellar Expert:', `https://stellar.expert/explorer/futurenet/tx/${result.data.transactionHash}`)
-        
-        // Reset form and close dialog
-        setFormData({
-          name: "",
-          token: "",
-          amount: "",
-          frequency: "",
-          duration: "",
-          penalty: "2",
-          reason: ""
-        })
-        setOpen(false)
-        // Dispatch custom event to refresh SIP list
-        window.dispatchEvent(new CustomEvent('sipCreated', { detail: result.data }))
-        
-        // Show success message with transaction hash
-        alert(`✅ SIP Created Successfully!\n\nTransaction Hash: ${result.data.transactionHash}\n\nView on Stellar Expert:\nhttps://stellar.expert/explorer/futurenet/tx/${result.data.transactionHash}`)
-      } else {
-        setError(result.error || "Failed to create SIP")
-      }
-    } catch (error) {
-      setError("Failed to create SIP. Please try again.")
-    } finally {
+        {
+          onSuccess: (result) => {
+            console.log('🎉 SIP CREATED SUCCESSFULLY!')
+            console.log('📝 Transaction Digest:', result.digest)
+            console.log('🔗 View on OneChain Explorer:', `https://onescan.cc/testnet/transactionBlocksDetail?digest=${result.digest}`)
+            
+            // Reset form and close dialog
+            setFormData({
+              name: "",
+              token: "",
+              amount: "",
+              frequency: "",
+              duration: "",
+              penalty: "2",
+              reason: ""
+            })
+            setOpen(false)
+            setIsCreating(false)
+            
+            // Dispatch custom event to refresh SIP list
+            window.dispatchEvent(new CustomEvent('sipCreated', { detail: result }))
+            
+            // Show success notification with clickable link
+            const explorerUrl = `https://onescan.cc/testnet/transactionBlocksDetail?digest=${result.digest}`
+            const message = `✅ SIP Created Successfully!\n\nTransaction Hash: ${result.digest}\n\nClick OK to view on OneChain Explorer`
+            
+            if (confirm(message)) {
+              window.open(explorerUrl, '_blank')
+            }
+          },
+          onError: (error) => {
+            console.error('Transaction failed:', error)
+            setError(error.message || "Failed to create SIP")
+            setIsCreating(false)
+          },
+        }
+      )
+    } catch (error: any) {
+      console.error('Failed to create SIP:', error)
+      setError(error.message || "Failed to create SIP. Please try again.")
       setIsCreating(false)
     }
   }
@@ -183,13 +171,13 @@ export function CreateSIPDialog() {
           Create SIP
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-card/80 backdrop-blur-xl border-0 shadow-2xl">
+      <DialogContent className="sm:max-w-[425px] bg-white border shadow-lg">
         <DialogHeader>
           <DialogTitle>Create New SIP</DialogTitle>
           <DialogDescription>Set up a systematic investment plan to automate your DeFi investments.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          {!isConnected && (
+          {!currentAccount && (
             <Alert>
               <Wallet className="h-4 w-4" />
               <AlertDescription>
@@ -312,7 +300,7 @@ export function CreateSIPDialog() {
           <Button 
             type="submit" 
             onClick={handleCreateSIP}
-            disabled={!isConnected || isCreating || !isAmountValid || !formData.name || !formData.token || !formData.amount || !formData.frequency}
+            disabled={!currentAccount || isCreating || !isAmountValid || !formData.name || !formData.token || !formData.amount || !formData.frequency}
           >
             {isCreating ? "Creating..." : "Create SIP"}
           </Button>

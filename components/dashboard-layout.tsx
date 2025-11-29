@@ -3,7 +3,8 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { getPublicKey, disconnectWallet } from "@/lib/onechain-wallet"
+import Link from "next/link"
+import { useCurrentAccount, useDisconnectWallet } from "@mysten/dapp-kit"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -16,32 +17,16 @@ interface DashboardLayoutProps {
 }
 
 function WalletInfo() {
-  const [address, setAddress] = useState<string | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const currentAccount = useCurrentAccount()
+  const { mutate: disconnect } = useDisconnectWallet()
   const router = useRouter()
 
-  useEffect(() => {
-    checkConnection()
-  }, [])
-
-  const checkConnection = async () => {
-    const publicKey = await getPublicKey()
-    if (publicKey) {
-      setAddress(publicKey)
-      setIsConnected(true)
-    } else {
-      router.push('/')
-    }
-  }
-
   const handleLogout = () => {
-    disconnectWallet()
-    setAddress(null)
-    setIsConnected(false)
+    disconnect()
     router.push('/')
   }
 
-  if (!isConnected || !address) {
+  if (!currentAccount) {
     return (
       <Button variant="outline" size="sm" onClick={() => router.push('/')}>
         <Wallet className="h-4 w-4 mr-2" />
@@ -50,7 +35,7 @@ function WalletInfo() {
     )
   }
 
-  const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`
+  const shortAddress = `${currentAccount.address.slice(0, 6)}...${currentAccount.address.slice(-4)}`
 
   return (
     <div className="flex items-center space-x-2">
@@ -93,14 +78,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="min-h-screen bg-background">
       {/* Mobile sidebar */}
       <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? "block" : "hidden"}`}>
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-        <div className="fixed inset-y-0 left-0 w-64 bg-card border-r">
-          <div className="flex items-center justify-between p-4 border-b">
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-slate-50 to-white border-r border-slate-200 shadow-2xl">
+          <div className="flex items-center justify-between p-4 border-b border-slate-200">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">S</span>
-              </div>
-              <span className="font-bold text-lg">Sphira</span>
+              <img src="/logo.png" alt="Sphira" className="h-8 w-auto" />
+              <span className="font-bold text-lg text-slate-900">Sphira</span>
             </div>
             <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(false)}>
               <X className="h-4 w-4" />
@@ -110,18 +93,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             {navigation.map((item) => {
               const isActive = pathname === item.href
               return (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center space-x-3 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      ? "bg-gradient-to-r from-emerald-50 to-blue-50 text-slate-900 shadow-sm border border-emerald-100"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  <item.icon className="h-4 w-4" />
+                  <item.icon className={`h-5 w-5 ${isActive ? 'text-[#00D382]' : 'text-slate-500'}`} />
                   <span>{item.name}</span>
-                </a>
+                </Link>
               )
             })}
           </nav>
@@ -132,7 +115,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className={`hidden lg:fixed lg:inset-y-0 lg:left-0 lg:block transition-all duration-300 ${
         sidebarCollapsed ? 'lg:w-16' : 'lg:w-64'
       }`}>
-        <div className="flex flex-col h-full bg-card border-r">
+        <div className="flex flex-col h-full bg-gradient-to-b from-slate-50 to-white border-r border-slate-200 shadow-lg">
           <div className={`flex items-center p-6 border-b transition-all duration-300 ${
             sidebarCollapsed ? 'justify-center' : 'justify-between'
           }`}>
@@ -142,13 +125,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 sidebarCollapsed ? 'space-x-0' : 'space-x-2'
               }`}
             >
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">S</span>
-              </div>
+              <img src="/logo.png" alt="Sphira" className="h-10 w-auto" />
               {!sidebarCollapsed && (
                 <div className="transition-opacity duration-300">
-                  <span className="font-bold text-xl">Sphira</span>
-                  <Badge variant="secondary" className="ml-2 text-xs">
+                  <span className="font-bold text-xl text-slate-900">Sphira</span>
+                  <Badge className="ml-2 text-xs bg-emerald-100 text-emerald-700 border-emerald-200">
                     v2.0
                   </Badge>
                 </div>
@@ -170,53 +151,53 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             {navigation.map((item) => {
               const isActive = pathname === item.href
               return (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   title={sidebarCollapsed ? item.name : undefined}
-                  className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={`flex items-center px-3 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                     sidebarCollapsed ? 'justify-center space-x-0' : 'space-x-3'
                   } ${
                     isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      ? "bg-gradient-to-r from-emerald-50 to-blue-50 text-slate-900 shadow-sm border border-emerald-100"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  <item.icon className="h-4 w-4 flex-shrink-0" />
+                  <item.icon className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-[#00D382]' : 'text-slate-500'}`} />
                   {!sidebarCollapsed && (
                     <span className="transition-opacity duration-300">{item.name}</span>
                   )}
-                </a>
+                </Link>
               )
             })}
           </nav>
 
-          <div className="p-4 border-t">
-            <Card className={`p-3 transition-all duration-300 ${
+          <div className="p-4 border-t border-slate-200">
+            <div className={`p-3 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl border border-emerald-100 transition-all duration-300 ${
               sidebarCollapsed ? 'flex justify-center' : ''
             }`}>
               {sidebarCollapsed ? (
-                <div className="w-2 h-2 bg-green-500 rounded-full" title="OneChain Network Connected" />
+                <div className="w-2 h-2 bg-[#00D382] rounded-full animate-pulse" title="OneChain Network Connected" />
               ) : (
                 <>
                   <div className="flex items-center space-x-2 mb-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <span className="text-xs font-medium">OneChain Network</span>
+                    <div className="w-2 h-2 bg-[#00D382] rounded-full animate-pulse" />
+                    <span className="text-xs font-semibold text-slate-900">OneChain Network</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Connected to OneChain blockchain</p>
+                  <p className="text-xs text-slate-600">Connected to blockchain</p>
                 </>
               )}
-            </Card>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main content */}
-      <div className={`transition-all duration-300 ${
+      <div className={`min-h-screen bg-white transition-all duration-300 ${
         sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'
       }`}>
         {/* Top bar */}
-        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+        <div className="sticky top-0 z-40 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200">
           <div className="flex items-center justify-between px-4 py-3">
             <Button variant="ghost" size="sm" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
               <Menu className="h-4 w-4" />

@@ -2,10 +2,11 @@ import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { Providers } from "@/components/providers"
 import "./globals.css"
+import "@mysten/dapp-kit/dist/index.css"
 
 export const metadata: Metadata = {
-  title: "Sphira - The Future of DeFi",
-  description: "Advanced SIP 2.0 platform with automated yields, emergency locks, and real-time analytics on Stellar blockchain",
+  title: "Sphira - Grow Fearlessly on Chain",
+  description: "Automated Investing Secured Forever by Smart Contracts Globally. Systematic Investment Plans, Yield Optimization, and Emergency Vaults on OneChain blockchain.",
 }
 
 export default function RootLayout({
@@ -14,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${GeistSans.variable} antialiased`}>
         <Providers>
           {children}

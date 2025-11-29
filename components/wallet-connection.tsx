@@ -30,7 +30,7 @@ export function WalletConnection() {
   const connectWallet = async () => {
     setIsConnecting(true)
     try {
-      // Simulate MetaMask/WalletConnect connection
+      // Simulate OneChain wallet connection
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
       setWallet({
@@ -97,7 +97,7 @@ export function WalletConnection() {
             {isConnecting ? "Connecting..." : "Connect Wallet"}
           </Button>
           <div className="text-center">
-            <p className="text-sm text-muted-foreground">Supports MetaMask, WalletConnect, and other Web3 wallets</p>
+            <p className="text-sm text-muted-foreground">Supports OneChain Wallet and other Sui-compatible wallets</p>
           </div>
         </CardContent>
       </Card>

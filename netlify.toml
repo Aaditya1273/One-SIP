@@ -1,31 +1,100 @@
+# Netlify Configuration for Sphira DeFi Platform
+# OneChain Blockchain Integration
+
 [build]
   publish = ".next"
-  command = "npm ci --legacy-peer-deps || npm install --legacy-peer-deps --force; npm run build"
+  command = "npm install && npm run build"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "18.17.0"
   NPM_VERSION = "9"
-  NPM_CONFIG_LEGACY_PEER_DEPS = "true"
+  NEXT_TELEMETRY_DISABLED = "1"
 
+# Next.js Plugin for optimal performance
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Function configuration
 [functions]
   node_bundler = "esbuild"
+  directory = ".netlify/functions"
+
+# Redirects and rewrites
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Development server configuration
 [dev]
   command = "npm run dev"
   port = 3000
   publish = ".next"
+  autoLaunch = true
 
-# Environment variables for production
-# Add these in Netlify dashboard under Site settings > Environment variables
-# NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
-# NEXT_PUBLIC_ALCHEMY_API_KEY=your_alchemy_key
-# NEXT_PUBLIC_SOMNIA_RPC_URL=https://somnia-rpc-url
-# GEMINI_API_KEY=your_gemini_api_key (server-side only)
+# Context-specific builds
+[context.production]
+  command = "npm run build"
+  
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"
+
+# Environment variables documentation
+# Add these in Netlify dashboard: Site settings > Environment variables
+
+# OneChain Configuration
+# NEXT_PUBLIC_ONECHAIN_NETWORK=testnet
+# NEXT_PUBLIC_ONECHAIN_RPC_URL=https://rpc-testnet.onelabs.cc:443
+# NEXT_PUBLIC_ONECHAIN_FAUCET_URL=https://faucet-testnet.onelabs.cc/v1/gas
+
+# Smart Contract Package IDs
+# NEXT_PUBLIC_SIP_MANAGER_PACKAGE_ID=0x...
+# NEXT_PUBLIC_YIELD_ROUTER_PACKAGE_ID=0x...
+# NEXT_PUBLIC_LOCK_VAULT_PACKAGE_ID=0x...
+
+# Shared Object IDs
+# NEXT_PUBLIC_SIP_MANAGER_OBJECT_ID=0x...
+# NEXT_PUBLIC_YIELD_ROUTER_OBJECT_ID=0x...
+# NEXT_PUBLIC_VAULT_MANAGER_OBJECT_ID=0x...
+
+# AI Configuration
+# GOOGLE_GEMINI_API_KEY=your_api_key_here
+
+# Analytics (optional)
+# NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_analytics_id

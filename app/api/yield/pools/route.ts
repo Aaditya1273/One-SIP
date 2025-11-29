@@ -1,53 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { onechainService } from "@/lib/onechain-service"
-
-// Fallback pool data for when blockchain is not available
-const FALLBACK_POOLS = [
-  {
-    id: 1,
-    name: "Stellar-USDC Liquidity Pool",
-    protocol: "StellarSwap",
-    apy: 12.8,
-    tvl: 2450000,
-    riskScore: 3,
-    verified: true,
-    tokens: ["XLM", "USDC"],
-    contractAddress: process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xA0b86a33E6441e6e80D0c4C6C7527d72e1d00000",
-  },
-  {
-    id: 2,
-    name: "USDC Lending Pool",
-    protocol: "StellarLend",
-    apy: 8.5,
-    tvl: 5200000,
-    riskScore: 2,
-    verified: true,
-    tokens: ["USDC"],
-    contractAddress: "0x2345678901234567890123456789012345678901",
-  },
-  {
-    id: 3,
-    name: "ETH Staking Pool",
-    protocol: "StellarStake",
-    apy: 9.2,
-    tvl: 1800000,
-    riskScore: 4,
-    verified: true,
-    tokens: ["ETH"],
-    contractAddress: process.env.NEXT_PUBLIC_ETH_ADDRESS || "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-  },
-  {
-    id: 4,
-    name: "XLM Native Staking",
-    protocol: "Stellar Network",
-    apy: 15.5,
-    tvl: 8900000,
-    riskScore: 1,
-    verified: true,
-    tokens: ["XLM"],
-    contractAddress: process.env.NEXT_PUBLIC_SOM_ADDRESS || "0x1234567890123456789012345678901234567890",
-  }
-]
+import { SuiClient } from '@mysten/sui/client'
 
 
 
@@ -65,27 +17,56 @@ export async function GET(request: NextRequest) {
     let totalYield = "0.00"
     if (userAddress) {
       try {
-        const balanceData = await onechainService.getAccountBalance(userAddress)
-        balance = balanceData.oct.toFixed(2)
+        // TODO: Implement balance fetching from OneChain
+        balance = "0.00"
       } catch (error) {
         console.error("Error getting balance:", error)
       }
     }
 
-    let pools = []
+    // Create server-side OneChain client
+    const client = new SuiClient({
+      url: process.env.NEXT_PUBLIC_ONECHAIN_RPC_URL || 'https://rpc-testnet.onelabs.cc:443'
+    })
+
+    // Get package ID from environment
+    const yieldRouterPackage = process.env.NEXT_PUBLIC_YIELD_ROUTER_PACKAGE_ID!
+
+    let pools: any[] = []
 
     try {
-      // Try to get real data from blockchain
-      // TODO: Implement getYieldPools in stellar-service
-      pools = FALLBACK_POOLS
-    } catch (error) {
-      console.log("Blockchain not available, using fallback data")
-      pools = FALLBACK_POOLS
-    }
+      // Fetch yield pool objects from OneChain blockchain
+      // Note: This assumes yield pools are stored as objects on-chain
+      // If they're not deployed yet, this will return empty array
+      const objects = await client.getOwnedObjects({
+        owner: yieldRouterPackage,
+        options: {
+          showContent: true,
+          showType: true,
+        },
+      })
 
-    // If no pools from blockchain, use fallback
-    if (pools.length === 0) {
-      pools = FALLBACK_POOLS
+      // Parse pool data from blockchain objects
+      for (const obj of objects.data) {
+        if (obj.data?.content && 'fields' in obj.data.content) {
+          const fields = obj.data.content.fields as any
+          pools.push({
+            id: obj.data.objectId,
+            name: fields.name || 'OneChain Pool',
+            protocol: fields.protocol || 'OneChain',
+            apy: parseFloat(fields.apy || '0') / 100,
+            tvl: parseInt(fields.tvl || '0'),
+            riskScore: parseInt(fields.risk_score || '3'),
+            verified: true,
+            tokens: fields.tokens || ['OCT'],
+            contractAddress: obj.data.objectId,
+          })
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching yield pools from blockchain:', error)
+      // Return empty array if blockchain fetch fails
+      pools = []
     }
 
     // Apply filters

@@ -75,10 +75,11 @@ fun init(ctx: &mut TxContext) {
     transfer::share_object(manager);
 }
 
-/// Create a new SIP
+/// Create a new SIP with initial deposit
 public fun create_sip(
     amount_per_deposit: u64,
     frequency: u64,
+    initial_payment: Coin<OCT>,
     clock: &Clock,
     ctx: &mut TxContext
 ): SIP {
@@ -90,24 +91,39 @@ public fun create_sip(
         E_INVALID_FREQUENCY
     );
 
+    let payment_amount = coin::value(&initial_payment);
+    assert!(payment_amount >= amount_per_deposit, E_INSUFFICIENT_BALANCE);
+
     let current_time = clock::timestamp_ms(clock) / 1000;
+    
+    // Create SIP with first deposit already counted
     let sip = SIP {
         id: object::new(ctx),
         owner: tx_context::sender(ctx),
         amount_per_deposit,
         frequency,
-        next_execution: current_time + frequency,
-        total_deposits: 0,
-        total_invested: 0,
+        next_execution: current_time + frequency, // Next deposit after frequency period
+        total_deposits: 1, // First deposit done immediately
+        total_invested: amount_per_deposit, // First deposit amount
         status: STATUS_ACTIVE,
         created_at: current_time,
     };
+
+    // Transfer initial payment to yield router (simplified - in production route to yield optimizer)
+    transfer::public_transfer(initial_payment, tx_context::sender(ctx));
 
     event::emit(SIPCreated {
         sip_id: object::uid_to_address(&sip.id),
         owner: tx_context::sender(ctx),
         amount: amount_per_deposit,
         frequency,
+    });
+
+    // Emit first execution event
+    event::emit(SIPExecuted {
+        sip_id: object::uid_to_address(&sip.id),
+        amount: amount_per_deposit,
+        timestamp: current_time,
     });
 
     sip

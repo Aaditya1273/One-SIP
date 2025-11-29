@@ -1,81 +1,84 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { onechainService } from "@/lib/onechain-service"
+import { NextRequest, NextResponse } from 'next/server'
+import { SuiClient } from '@mysten/sui/client'
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const userAddress = searchParams.get("userAddress")
+    const userAddress = searchParams.get('userAddress')
 
     if (!userAddress) {
-      return NextResponse.json({ success: false, error: "User address required" }, { status: 400 })
+      return NextResponse.json(
+        { success: false, error: 'User address required' },
+        { status: 400 }
+      )
     }
 
-    // Get real portfolio data from OneChain blockchain
-    const portfolioData = await onechainService.getPortfolioData(userAddress)
-    
-    // Add additional calculated fields
-    const enhancedPortfolio = {
-      ...portfolioData,
-      performance: {
-        daily: portfolioData.returnPercentage > 0 ? 2.3 : -1.2,
-        weekly: portfolioData.returnPercentage > 0 ? 8.7 : -3.4,
-        monthly: portfolioData.returnPercentage,
-        yearly: portfolioData.returnPercentage * 12
-      },
-      topPerformers: [
-        {
-          name: "USDC SIP",
-          value: portfolioData.totalInvested * 0.6,
-          change: 12.5,
-          apy: 12.5
-        },
-        {
-          name: "ETH SIP", 
-          value: portfolioData.totalInvested * 0.3,
-          change: 8.7,
-          apy: 8.7
-        },
-        {
-          name: "XLM Staking",
-          value: portfolioData.totalInvested * 0.1,
-          change: 15.2,
-          apy: 15.2
-        }
-      ],
-      recentActivity: []
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: enhancedPortfolio,
+    // Create server-side OneChain client
+    const client = new SuiClient({
+      url: process.env.NEXT_PUBLIC_ONECHAIN_RPC_URL || 'https://rpc-testnet.onelabs.cc:443'
     })
-  } catch (error) {
-    console.error("Error fetching portfolio from blockchain:", error)
-    
-    // Return empty portfolio structure if blockchain fails
+
+    // Get package ID from environment
+    const packageId = process.env.NEXT_PUBLIC_SIP_MANAGER_PACKAGE_ID!
+
+    // Fetch SIP objects owned by the user
+    const objects = await client.getOwnedObjects({
+      owner: userAddress,
+      filter: {
+        StructType: `${packageId}::sip_manager::SIP`,
+      },
+      options: {
+        showContent: true,
+        showType: true,
+      },
+    })
+
+    // Get wallet balance
+    const balance = await client.getBalance({
+      owner: userAddress,
+      coinType: '0x2::oct::OCT', // OneChain native token
+    })
+    const walletBalance = parseInt(balance.totalBalance) / 1_000_000_000
+
+    // Parse SIP data and calculate stats
+    let activeSIPs = 0
+    let totalInvested = 0
+
+    for (const obj of objects.data) {
+      if (obj.data?.content && 'fields' in obj.data.content) {
+        const fields = obj.data.content.fields as any
+        const status = parseInt(fields.status)
+        const invested = parseInt(fields.total_invested) / 1_000_000_000
+
+        if (status === 0) { // Active
+          activeSIPs++
+        }
+        totalInvested += invested
+      }
+    }
+
+    // Total portfolio value = wallet balance + invested in SIPs
+    const totalValue = walletBalance + totalInvested
+    const totalReturn = 0 // No yield calculation yet
+    const returnPercentage = totalInvested > 0 ? (totalReturn / totalInvested) * 100 : 0
+
     return NextResponse.json({
       success: true,
       data: {
-        totalValue: 0,
-        totalInvested: 0,
-        totalReturn: 0,
-        returnPercentage: 0,
-        activeSIPs: 0,
-        totalLocked: 0,
-        breakdown: {
-          sips: 0,
-          yield: 0,
-          locked: 0
-        },
-        performance: {
-          daily: 0,
-          weekly: 0,
-          monthly: 0,
-          yearly: 0
-        },
-        topPerformers: [],
-        recentActivity: []
+        totalValue,
+        currentBalance: walletBalance,
+        activeSIPs,
+        totalInvested,
+        totalReturn,
+        returnPercentage,
+        totalLocked: 0, // Vault not implemented yet
       },
     })
+  } catch (error) {
+    console.error('Portfolio API error:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to fetch portfolio data' },
+      { status: 500 }
+    )
   }
 }

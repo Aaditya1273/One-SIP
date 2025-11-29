@@ -1,16 +1,46 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { blockchainService } from "@/lib/blockchain-service"
+import { getOneChainClient } from "@/lib/onechain-wallet"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const sipId = Number.parseInt(params.id)
+    const sipId = params.id
     
-    if (isNaN(sipId)) {
+    if (!sipId) {
       return NextResponse.json({ success: false, error: "Invalid SIP ID" }, { status: 400 })
     }
 
-    // Get SIP data from blockchain
-    const sipData = await blockchainService.getSIP(sipId)
+    // Get SIP data from OneChain blockchain
+    const client = getOneChainClient()
+    const object = await client.getObject({
+      id: sipId,
+      options: {
+        showContent: true,
+        showType: true,
+      },
+    })
+
+    if (!object.data?.content || !('fields' in object.data.content)) {
+      return NextResponse.json({ success: false, error: "SIP not found on blockchain" }, { status: 404 })
+    }
+
+    const fields = object.data.content.fields as any
+    
+    // Format SIP data
+    const sipData = {
+      id: sipId,
+      sip_id: sipId,
+      user_address: fields.owner,
+      amount: (parseInt(fields.amount_per_deposit || '0') / 1e9).toString(),
+      frequency: fields.frequency === '86400' ? 'Daily' : fields.frequency === '604800' ? 'Weekly' : 'Monthly',
+      status: fields.status === 0 ? 'Active' : fields.status === 1 ? 'Paused' : 'Cancelled',
+      created_at: new Date(parseInt(fields.created_at || '0') * 1000).toISOString(),
+      next_execution: new Date(parseInt(fields.next_execution || '0') * 1000).toISOString(),
+      total_deposits: fields.total_deposits?.toString() || '0',
+      total_invested: (parseInt(fields.total_invested || '0') / 1e9).toString(),
+      execution_count: parseInt(fields.total_deposits || '0'),
+      apy_target: 12.5,
+      token_symbol: 'OCT',
+    }
 
     return NextResponse.json({
       success: true,
@@ -18,52 +48,28 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     })
   } catch (error) {
     console.error("Error fetching SIP from blockchain:", error)
-    return NextResponse.json({ success: false, error: "SIP not found on blockchain" }, { status: 404 })
+    return NextResponse.json({ success: false, error: "SIP not found" }, { status: 404 })
   }
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const sipId = Number.parseInt(params.id)
+    const sipId = params.id
     const body = await request.json()
-    const { status, amount, frequency } = body
+    const { status } = body
 
-    if (isNaN(sipId)) {
+    if (!sipId) {
       return NextResponse.json({ success: false, error: "Invalid SIP ID" }, { status: 400 })
     }
 
-    // Prepare transaction data for frontend to execute
-    let transactionData: any = {
-      contractAddress: process.env.NEXT_PUBLIC_SIP_MANAGER_ADDRESS,
-      sipId: sipId
-    }
-
-    if (status === 'PAUSED') {
-      transactionData.method = 'pauseSIP'
-      transactionData.params = { sipId }
-    } else if (status === 'CANCELLED') {
-      transactionData.method = 'cancelSIP'
-      transactionData.params = { sipId }
-    } else if (amount || frequency) {
-      // Map frequency strings to numbers
-      const frequencyMap: { [key: string]: number } = {
-        'DAILY': 0,
-        'WEEKLY': 1,
-        'MONTHLY': 2
-      }
-
-      transactionData.method = 'updateSIP'
-      transactionData.params = {
-        sipId,
-        newAmount: amount || '0',
-        newFrequency: frequency ? frequencyMap[frequency.toUpperCase()] : 1
-      }
-    }
-
+    // Return success - actual transaction will be built on frontend
     return NextResponse.json({
       success: true,
-      data: transactionData,
-      message: "SIP update transaction prepared. Execute via wallet.",
+      data: {
+        sipId,
+        newStatus: status,
+      },
+      message: `SIP status update to ${status} will be processed on frontend`,
     })
   } catch (error) {
     console.error("Error preparing SIP update:", error)
@@ -73,38 +79,22 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const sipId = Number.parseInt(params.id)
-    const body = await request.json()
-    const { userAddress } = body
+    const sipId = params.id
 
-    if (isNaN(sipId)) {
+    if (!sipId) {
       return NextResponse.json({ success: false, error: "Invalid SIP ID" }, { status: 400 })
     }
 
-    if (!userAddress) {
-      return NextResponse.json({ success: false, error: "User address required" }, { status: 400 })
-    }
-
-    // Remove SIP from temporary storage (in production, this would interact with blockchain)
-    const allSIPs = JSON.parse((global as any).tempSIPStorage || '{}')
-    const userSIPs = allSIPs[userAddress] || []
-    
-    const sipIndex = userSIPs.findIndex((sip: any) => sip.id === sipId)
-    if (sipIndex === -1) {
-      return NextResponse.json({ success: false, error: "SIP not found" }, { status: 404 })
-    }
-
-    // Remove the SIP
-    userSIPs.splice(sipIndex, 1)
-    allSIPs[userAddress] = userSIPs
-    ;(global as any).tempSIPStorage = JSON.stringify(allSIPs)
-
+    // Return success - actual transaction will be built on frontend
     return NextResponse.json({
       success: true,
-      message: "SIP cancelled successfully",
+      data: {
+        sipId,
+      },
+      message: "SIP cancellation will be processed on frontend",
     })
   } catch (error) {
-    console.error("Error cancelling SIP:", error)
-    return NextResponse.json({ success: false, error: "Failed to cancel SIP" }, { status: 500 })
+    console.error("Error preparing SIP cancellation:", error)
+    return NextResponse.json({ success: false, error: "Failed to prepare SIP cancellation" }, { status: 500 })
   }
 }

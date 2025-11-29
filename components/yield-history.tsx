@@ -4,30 +4,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/onechain-wallet"
+import { useCurrentAccount } from "@mysten/dapp-kit"
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, Wallet, AlertTriangle } from "lucide-react"
 
 export function YieldHistory() {
-  const { address, isConnected } = useAccount()
+  const currentAccount = useCurrentAccount()
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [hasRealData, setHasRealData] = useState(false)
 
   useEffect(() => {
-    if (isConnected && address) {
+    if (currentAccount) {
       loadRealYieldData()
     } else {
       setLoading(false)
     }
-  }, [address, isConnected])
+  }, [currentAccount])
 
   const loadRealYieldData = async () => {
     try {
       setLoading(true)
       
       // Fetch real yield history from API
-      const response = await fetch(`/api/yield?userAddress=${address}`)
+      const response = await fetch(`/api/yield?userAddress=${currentAccount?.address}`)
       const result = await response.json()
       
       if (result.success && result.data.length > 0) {
@@ -54,7 +54,7 @@ export function YieldHistory() {
     }
   }
 
-  if (!isConnected) {
+  if (!currentAccount) {
     return (
       <Card className="bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-0">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
