@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { stellarService } from "@/lib/stellar-service"
+import { onechainService } from "@/lib/onechain-service"
 
 export async function GET(request: NextRequest) {
   try {
@@ -11,19 +11,19 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user's SIPs to build activity feed
-    const sipIds = await stellarService.getUserSIPs(userAddress)
+    const sipIds = await onechainService.getUserSIPs(userAddress)
     
     const activities = []
     
     // Get details for each SIP and create activity entries
     for (const sipId of sipIds.slice(0, 10)) { // Limit to 10 most recent
-      const sipDetails = await stellarService.getSIPDetails(sipId) as any
+      const sipDetails = await onechainService.getSIPDetails(sipId) as any
       if (sipDetails) {
         activities.push({
           id: `sip-${sipId}`,
           title: "SIP Created",
-          description: `${sipDetails.name || `SIP #${sipId}`} - ${sipDetails.token || 'XLM'}`,
-          amount: `${sipDetails.amount || 0} ${sipDetails.token || 'XLM'}`,
+          description: `${sipDetails.name || `SIP #${sipId}`} - ${sipDetails.token || 'OCT'}`,
+          amount: `${sipDetails.amount || 0} ${sipDetails.token || 'OCT'}`,
           time: sipDetails.created_at ? new Date(sipDetails.created_at).toLocaleDateString() : 'Recently',
           icon: "TrendingUp",
           iconColor: "text-green-600",

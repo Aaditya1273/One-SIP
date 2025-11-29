@@ -148,20 +148,25 @@ public fun deposit(
 /// Get optimal pool (highest APY with acceptable risk)
 public fun get_optimal_pool(router: &YieldRouter, max_risk: u8): address {
     let pools = &router.pools;
-    let keys = vec_map::keys(pools);
     let size = vec_map::size(pools);
     
-    let mut best_pool = *vector::borrow(keys, 0);
+    // Return first pool address if exists, otherwise return zero address
+    if (size == 0) {
+        return @0x0
+    };
+    
+    // Get first pool as default
+    let (first_addr, _) = vec_map::get_entry_by_idx(pools, 0);
+    let mut best_pool = *first_addr;
     let mut best_apy = 0u64;
     let mut i = 0;
     
     while (i < size) {
-        let pool_addr = *vector::borrow(keys, i);
-        let pool = vec_map::get(pools, &pool_addr);
+        let (pool_addr, pool) = vec_map::get_entry_by_idx(pools, i);
         
         if (pool.is_active && pool.risk_score <= max_risk && pool.current_apy > best_apy) {
             best_apy = pool.current_apy;
-            best_pool = pool_addr;
+            best_pool = *pool_addr;
         };
         
         i = i + 1;

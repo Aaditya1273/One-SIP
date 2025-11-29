@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Zap, TrendingUp, Shield, AlertTriangle, ExternalLink, Wallet } from "lucide-react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 import { useState, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast"
 
@@ -89,7 +89,7 @@ export function YieldOptimizer() {
           <Wallet className="h-16 w-16 text-muted-foreground mb-4" />
           <h3 className="text-xl font-semibold mb-2">Connect Wallet Required</h3>
           <p className="text-muted-foreground mb-6 max-w-md">
-            Connect your wallet to access real yield optimization data from Stellar blockchain
+            Connect your wallet to access real yield optimization data from OneChain blockchain
           </p>
           <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
             Real Blockchain Data Only
@@ -107,7 +107,7 @@ export function YieldOptimizer() {
             <Zap className="h-5 w-5 text-primary animate-pulse" />
             Yield Optimizer
           </CardTitle>
-          <CardDescription>Loading real yield data from Stellar blockchain...</CardDescription>
+          <CardDescription>Loading real yield data from OneChain blockchain...</CardDescription>
         </CardHeader>
         <CardContent className="py-12">
           <div className="flex items-center justify-center">
@@ -129,7 +129,7 @@ export function YieldOptimizer() {
                 <Zap className="h-5 w-5 text-primary" />
                 Yield Optimizer
               </CardTitle>
-              <CardDescription>Real-time yield optimization on Stellar blockchain</CardDescription>
+              <CardDescription>Real-time yield optimization on OneChain blockchain</CardDescription>
             </div>
             <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">
               Live Data
@@ -157,7 +157,7 @@ export function YieldOptimizer() {
             <div>
               <h3 className="text-lg font-semibold mb-2">No Active Yield Positions</h3>
               <p className="text-muted-foreground">
-                Connect to Stellar DeFi protocols to start earning yield on your assets
+                Connect to OneChain DeFi protocols to start earning yield on your assets
               </p>
             </div>
           </div>
@@ -261,7 +261,7 @@ export function YieldOptimizer() {
                       Available Yield Pools
                     </DialogTitle>
                     <p className="text-white/70 text-sm">
-                      Real yield opportunities from Stellar DeFi protocols
+                      Real yield opportunities from OneChain DeFi protocols
                     </p>
                   </DialogHeader>
                   <div className="space-y-4 mt-6">
@@ -270,7 +270,7 @@ export function YieldOptimizer() {
                         <AlertTriangle className="h-8 w-8 text-yellow-400" />
                       </div>
                       <div>
-                        <p className="text-white font-medium">Scanning Stellar Network</p>
+                        <p className="text-white font-medium">Scanning OneChain Network</p>
                         <p className="text-white/60 text-sm">
                           No active yield pools detected at this time
                         </p>
@@ -297,7 +297,7 @@ export function YieldOptimizer() {
                       Yield Optimization
                     </DialogTitle>
                     <p className="text-white/70 text-sm">
-                      AI-powered yield optimization across Stellar DeFi protocols
+                      AI-powered yield optimization across OneChain DeFi protocols
                     </p>
                   </DialogHeader>
                   <div className="space-y-4 mt-6">
@@ -339,7 +339,7 @@ export function YieldOptimizer() {
               <div className="text-xs">
                 <p className="font-medium text-green-600">100% Real Blockchain Data</p>
                 <p className="text-muted-foreground">
-                  All yield data is fetched directly from Stellar blockchain contracts. No mock or fake data is displayed.
+                  All yield data is fetched directly from OneChain blockchain contracts. No mock or fake data is displayed.
                 </p>
               </div>
             </div>

@@ -176,7 +176,7 @@ export function LandingPage() {
                     className="px-12 py-6 text-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-2xl hover:shadow-3xl transition-all duration-500 rounded-2xl"
                   >
                     <Wallet className="mr-3 h-6 w-6" />
-                    Connect Freighter Wallet
+                    Connect OneWallet
                     <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 </div>
@@ -296,7 +296,7 @@ export function LandingPage() {
                     className="px-12 py-6 text-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-2xl hover:shadow-3xl transition-all duration-500 rounded-2xl"
                   >
                     <Wallet className="mr-3 h-6 w-6" />
-                    Connect Freighter Wallet
+                    Connect OneWallet
                     <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 </div>

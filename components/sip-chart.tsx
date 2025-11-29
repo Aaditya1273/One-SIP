@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, Wallet } from "lucide-react"
 

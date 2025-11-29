@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, Wallet, AlertTriangle } from "lucide-react"
 
@@ -61,7 +61,7 @@ export function YieldHistory() {
           <Wallet className="h-16 w-16 text-muted-foreground mb-4" />
           <h3 className="text-xl font-semibold mb-2">Connect Wallet Required</h3>
           <p className="text-muted-foreground mb-6 max-w-md">
-            Connect your wallet to view real yield performance data from Stellar blockchain
+            Connect your wallet to view real yield performance data from OneChain blockchain
           </p>
           <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
             Real Blockchain Data Only
@@ -127,7 +127,7 @@ export function YieldHistory() {
                 <div className="text-xs">
                   <p className="font-medium text-green-600">100% Real Blockchain Data</p>
                   <p className="text-muted-foreground">
-                    All yield data is fetched directly from Stellar blockchain contracts. No mock or fake data is displayed.
+                    All yield data is fetched directly from OneChain blockchain contracts. No mock or fake data is displayed.
                   </p>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TrendingUp, Calendar, DollarSign, Target, Loader2 } from "lucide-react"
 

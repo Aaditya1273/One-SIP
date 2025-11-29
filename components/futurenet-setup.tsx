@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { AlertCircle, Copy, Check } from "lucide-react"
 import { useState } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 
 export function FuturenetSetup() {
   const [copied, setCopied] = useState(false)
@@ -13,10 +13,10 @@ export function FuturenetSetup() {
   // Don't show if already connected
   if (isConnected) return null
   
-  const futurenetConfig = {
-    name: "Futurenet",
-    rpcUrl: "https://rpc-futurenet.stellar.org:443",
-    networkPassphrase: "Test SDF Future Network ; October 2022"
+  const testnetConfig = {
+    name: "OneChain Testnet",
+    rpcUrl: "https://rpc-testnet.onelabs.cc:443",
+    faucetUrl: "https://faucet-testnet.onelabs.cc/v1/gas"
   }
 
   const copyToClipboard = (text: string) => {
@@ -30,20 +30,20 @@ export function FuturenetSetup() {
       <CardHeader>
         <div className="flex items-center gap-2">
           <AlertCircle className="h-5 w-5 text-orange-500" />
-          <CardTitle>Futurenet Setup Required</CardTitle>
+          <CardTitle>OneChain Testnet Setup</CardTitle>
         </div>
         <CardDescription>
-          Add Futurenet as a custom network in Freighter to use this app
+          Connect to OneChain Testnet to use this app
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <p className="text-sm font-medium">Steps:</p>
           <ol className="text-sm space-y-2 list-decimal list-inside">
-            <li>Open Freighter wallet</li>
-            <li>Go to Settings → Network</li>
-            <li>Click "Add custom network"</li>
-            <li>Enter the details below:</li>
+            <li>Install OneWallet or Sui-compatible wallet</li>
+            <li>Connect to OneChain Testnet</li>
+            <li>Request test OCT tokens from faucet</li>
+            <li>Start using the app!</li>
           </ol>
         </div>
 
@@ -52,12 +52,12 @@ export function FuturenetSetup() {
             <p className="text-xs text-muted-foreground mb-1">Network Name:</p>
             <div className="flex items-center gap-2">
               <code className="text-sm flex-1 bg-background px-2 py-1 rounded">
-                {futurenetConfig.name}
+                {testnetConfig.name}
               </code>
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => copyToClipboard(futurenetConfig.name)}
+                onClick={() => copyToClipboard(testnetConfig.name)}
               >
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
@@ -68,12 +68,12 @@ export function FuturenetSetup() {
             <p className="text-xs text-muted-foreground mb-1">RPC URL:</p>
             <div className="flex items-center gap-2">
               <code className="text-sm flex-1 bg-background px-2 py-1 rounded break-all">
-                {futurenetConfig.rpcUrl}
+                {testnetConfig.rpcUrl}
               </code>
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => copyToClipboard(futurenetConfig.rpcUrl)}
+                onClick={() => copyToClipboard(testnetConfig.rpcUrl)}
               >
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
@@ -99,16 +99,9 @@ export function FuturenetSetup() {
 
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
           <p className="text-sm text-blue-600 dark:text-blue-400">
-            💡 <strong>Get Futurenet XLM:</strong> After adding the network, visit{" "}
-            <a
-              href="https://friendbot-futurenet.stellar.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              Futurenet Friendbot
-            </a>{" "}
-            to get test XLM
+            💡 <strong>Get Test OCT:</strong> After connecting, run{" "}
+            <code className="bg-blue-500/20 px-2 py-1 rounded">one client faucet</code>
+            {" "}to get test OCT tokens
           </p>
         </div>
       </CardContent>

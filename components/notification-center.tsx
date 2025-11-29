@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Bell, Check, AlertTriangle, Info, Zap, Shield } from "lucide-react"
 import { useApi } from "@/lib/api"
-import { getPublicKey } from "@/lib/stellar-wallet"
+import { getPublicKey } from "@/lib/onechain-wallet"
 
 interface Notification {
   id: number

@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { stellarService } from "@/lib/stellar-service"
+import { onechainService } from "@/lib/onechain-service"
 
 // Fallback pool data for when blockchain is not available
 const FALLBACK_POOLS = [
@@ -65,8 +65,8 @@ export async function GET(request: NextRequest) {
     let totalYield = "0.00"
     if (userAddress) {
       try {
-        const balanceData = await stellarService.getAccountBalance(userAddress)
-        balance = balanceData.xlm.toFixed(2)
+        const balanceData = await onechainService.getAccountBalance(userAddress)
+        balance = balanceData.oct.toFixed(2)
       } catch (error) {
         console.error("Error getting balance:", error)
       }

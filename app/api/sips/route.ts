@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { stellarService } from "@/lib/stellar-service"
+import { onechainService } from "@/lib/onechain-service"
 
 // Generate initial performance data when SIP is created
 async function generateInitialPerformanceData(userAddress: string, sip: any) {
@@ -51,13 +51,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: "User address required" }, { status: 400 })
     }
 
-    // Get user SIPs from REAL Stellar blockchain
-    const sipIds = await stellarService.getUserSIPs(userAddress)
+    // Get user SIPs from REAL OneChain blockchain
+    const sipIds = await onechainService.getUserSIPs(userAddress)
     
     // Fetch details for each SIP
     const userSIPs = []
     for (const sipId of sipIds) {
-      const sipDetails = await stellarService.getSIPDetails(sipId)
+      const sipDetails = await onechainService.getSIPDetails(sipId)
       if (sipDetails) {
         // Parse frequency enum (comes as array like ['Daily'])
         let frequency = 'Monthly'
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
         userSIPs.push({
           id: sipId,
           name: `SIP #${sipId}`,
-          token_symbol: 'XLM',
+          token_symbol: 'OCT',
           amount: sipDetails.amount,
           frequency: frequency,
           duration: sipDetails.max_executions,
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     // If no signedXDR, this is step 1: prepare transaction
     if (!signedXDR) {
       // Build transaction XDR for user to sign
-      const transactionXDR = await stellarService.buildCreateSIPTransaction(
+      const transactionXDR = await onechainService.buildCreateSIPTransaction(
         userAddress,
         {
           name,
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
     }
 
     // If signedXDR provided, this is step 2: submit to blockchain
-    const result = await stellarService.submitTransaction(signedXDR)
+    const result = await onechainService.submitTransaction(signedXDR)
     
     if (!result.success) {
       return NextResponse.json({ 
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
       success: true,
       data: {
         transactionHash: result.hash,
-        message: "SIP created successfully on Stellar blockchain!"
+        message: "SIP created successfully on OneChain blockchain!"
       }
     })
   } catch (error) {

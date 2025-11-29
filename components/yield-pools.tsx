@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { TrendingUp, Shield, AlertTriangle, ExternalLink, Wallet, Search } from "lucide-react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 import { useState, useEffect } from "react"
 
 export function YieldPools() {
@@ -25,7 +25,7 @@ export function YieldPools() {
         // Simulate real blockchain pool fetching
         await new Promise(resolve => setTimeout(resolve, 1500))
         
-        // In production, this would fetch from Stellar blockchain
+        // In production, this would fetch from OneChain blockchain
         setRealPools([]) // No fake data - only real pools when available
       } catch (error) {
         console.error("Error fetching pool data:", error)
@@ -44,7 +44,7 @@ export function YieldPools() {
           <Wallet className="h-16 w-16 text-muted-foreground mb-4" />
           <h3 className="text-xl font-semibold mb-2">Connect Wallet Required</h3>
           <p className="text-muted-foreground mb-6 max-w-md">
-            Connect your wallet to discover real yield pools on Stellar blockchain
+            Connect your wallet to discover real yield pools on OneChain blockchain
           </p>
           <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
             Real Pool Data Only
@@ -62,7 +62,7 @@ export function YieldPools() {
             <Search className="h-5 w-5 text-primary animate-pulse" />
             Available Yield Pools
           </CardTitle>
-          <CardDescription>Scanning Stellar blockchain for yield opportunities...</CardDescription>
+          <CardDescription>Scanning OneChain blockchain for yield opportunities...</CardDescription>
         </CardHeader>
         <CardContent className="py-12">
           <div className="flex items-center justify-center">
@@ -82,7 +82,7 @@ export function YieldPools() {
               <TrendingUp className="h-5 w-5 text-primary" />
               Available Yield Pools
             </CardTitle>
-            <CardDescription>Real yield opportunities on Stellar blockchain</CardDescription>
+            <CardDescription>Real yield opportunities on OneChain blockchain</CardDescription>
           </div>
           <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">
             Live Scan
@@ -110,7 +110,7 @@ export function YieldPools() {
           <div>
             <h3 className="text-lg font-semibold mb-2">No Active Yield Pools Found</h3>
             <p className="text-muted-foreground max-w-md mx-auto">
-              No yield-generating pools are currently active on the Stellar network. 
+              No yield-generating pools are currently active on the OneChain network. 
               Check back later as new DeFi protocols launch.
             </p>
           </div>
@@ -134,7 +134,7 @@ export function YieldPools() {
               </DialogHeader>
               <div className="space-y-4">
                 <p className="text-muted-foreground">
-                  Scanning Stellar blockchain for new yield opportunities
+                  Scanning OneChain blockchain for new yield opportunities
                 </p>
                 <div className="bg-muted/50 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
@@ -160,22 +160,22 @@ export function YieldPools() {
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
                   <ExternalLink className="h-5 w-5 text-green-600" />
-                  Stellar DeFi Ecosystem
+                  OneChain DeFi Ecosystem
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <p className="text-muted-foreground">
-                  Explore the growing Stellar DeFi ecosystem
+                  Explore the growing OneChain DeFi ecosystem
                 </p>
                 <div className="space-y-2">
                   <Button variant="outline" className="w-full justify-start" disabled>
-                    StellarSwap - Coming Soon
+                    OneSwap - Coming Soon
                   </Button>
                   <Button variant="outline" className="w-full justify-start" disabled>
-                    StellarLend - Coming Soon
+                    OneLend - Coming Soon
                   </Button>
                   <Button variant="outline" className="w-full justify-start" disabled>
-                    StellarStake - Coming Soon
+                    OneStake - Coming Soon
                   </Button>
                 </div>
                 <div className="text-center">
@@ -195,7 +195,7 @@ export function YieldPools() {
             <div className="text-xs">
               <p className="font-medium text-green-600">100% Real Blockchain Data</p>
               <p className="text-muted-foreground">
-                Pool data is fetched directly from Stellar blockchain. No fake or mock pools are displayed. 
+                Pool data is fetched directly from OneChain blockchain. No fake or mock pools are displayed. 
                 Real yield opportunities will appear here when DeFi protocols launch.
               </p>
             </div>

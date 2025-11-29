@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, TrendingDown, DollarSign, Zap, Lock, Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 
 type ChangeType = "positive" | "negative" | "neutral"
 

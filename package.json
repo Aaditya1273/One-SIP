@@ -15,10 +15,7 @@
     "deploy-contracts": "cd contracts && one client publish --gas-budget 100000000",
     "deploy-testnet": "cd contracts && one client publish --gas-budget 100000000",
     "deploy-production": "node scripts/deploy-production.js",
-    "market-launch": "npm run build && npm start",
-    "init-db": "node scripts/init-hackathon-db.js",
-    "reset-db": "node scripts/init-hackathon-db.js",
-    "db:stats": "node scripts/view-db.js"
+    "market-launch": "npm run build && npm start"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -54,13 +51,13 @@
     "@radix-ui/react-tooltip": "1.1.6",
     "@tailwindcss/postcss": "^4.1.9",
     "@tanstack/react-query": "^5.89.0",
-    "@types/better-sqlite3": "^7.6.13",
+
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vercel/analytics": "^1.0.0",
     "autoprefixer": "^10.4.20",
-    "better-sqlite3": "^12.2.0",
+
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",

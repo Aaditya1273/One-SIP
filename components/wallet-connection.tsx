@@ -42,12 +42,12 @@ export function WalletConnection() {
           eth: "8.75",
         },
         chainId: 50312,
-        chainName: "Stellar Testnet",
+        chainName: "OneChain Testnet",
       })
 
       toast({
         title: "Wallet Connected",
-        description: "Successfully connected to Stellar network",
+        description: "Successfully connected to OneChain network",
       })
     } catch (error) {
       toast({

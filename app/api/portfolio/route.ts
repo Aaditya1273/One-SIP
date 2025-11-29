@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { stellarService } from "@/lib/stellar-service"
+import { onechainService } from "@/lib/onechain-service"
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,8 +10,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: "User address required" }, { status: 400 })
     }
 
-    // Get real portfolio data from Stellar blockchain
-    const portfolioData = await stellarService.getPortfolioData(userAddress)
+    // Get real portfolio data from OneChain blockchain
+    const portfolioData = await onechainService.getPortfolioData(userAddress)
     
     // Add additional calculated fields
     const enhancedPortfolio = {

@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
-import { signTransaction } from "@/lib/stellar-wallet"
+import { useAccount, signAndExecuteTransaction } from "@/lib/onechain-wallet"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -217,11 +216,11 @@ export function CreateSIPDialog() {
                   <SelectValue placeholder="Select token" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="xlm">
-                    XLM (Stellar Lumens)
+                  <SelectItem value="oct">
+                    OCT (OneChain Token)
                   </SelectItem>
                   <SelectItem value="usdc">
-                    USDC on Stellar
+                    USDC on OneChain
                   </SelectItem>
                   <SelectItem value="eth">
                     ETH (Bridged)

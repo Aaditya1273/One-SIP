@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useAccount } from "@/lib/stellar-wallet"
+import { useAccount } from "@/lib/onechain-wallet"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -158,7 +158,7 @@ export function SIPList() {
           </div>
           <h3 className="text-2xl font-semibold mb-3">No SIPs Found</h3>
           <p className="text-muted-foreground text-center mb-8 max-w-md">
-            You haven't created any SIPs yet. Create your first SIP to start automated investing on Stellar blockchain.
+            You haven't created any SIPs yet. Create your first SIP to start automated investing on OneChain blockchain.
           </p>
           <CreateSIPDialog />
           <div className="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">

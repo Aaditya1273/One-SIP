@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { getPublicKey, disconnectWallet } from "@/lib/stellar-wallet"
+import { getPublicKey, disconnectWallet } from "@/lib/onechain-wallet"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -196,14 +196,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               sidebarCollapsed ? 'flex justify-center' : ''
             }`}>
               {sidebarCollapsed ? (
-                <div className="w-2 h-2 bg-green-500 rounded-full" title="Stellar Network Connected" />
+                <div className="w-2 h-2 bg-green-500 rounded-full" title="OneChain Network Connected" />
               ) : (
                 <>
                   <div className="flex items-center space-x-2 mb-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <span className="text-xs font-medium">Stellar Network</span>
+                    <span className="text-xs font-medium">OneChain Network</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Connected to Stellar blockchain</p>
+                  <p className="text-xs text-muted-foreground">Connected to OneChain blockchain</p>
                 </>
               )}
             </Card>
