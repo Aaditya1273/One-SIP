@@ -136,7 +136,8 @@ export async function getAllUserEvents(ownerAddress: string, limit = 100) {
           return events.data
             .filter((event: SuiEvent) => {
               const parsedJson = event.parsedJson as any
-              return parsedJson?.owner === ownerAddress || parsedJson?.sip_id
+              // Only return events that belong to this user
+              return parsedJson?.owner === ownerAddress
             })
             .map((event: SuiEvent) => ({
               type: eventType,
