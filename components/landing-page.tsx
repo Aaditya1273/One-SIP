@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
-import { connectWallet, disconnectWallet, getPublicKey } from "@/lib/stellar-wallet"
+import { connectWallet, disconnectWallet, getPublicKey } from "@/lib/onechain-wallet"
 import { Zap, Shield, TrendingUp, MessageSquare, BarChart3, ArrowRight, Sparkles, Rocket, Star, LogOut, Wallet } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useEffect, useState } from "react"
@@ -110,7 +110,7 @@ export function LandingPage() {
                   className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <Wallet className="mr-2 h-4 w-4" />
-                  Connect Freighter
+                  Connect OneWallet
                 </Button>
               </div>
             )}
@@ -125,7 +125,7 @@ export function LandingPage() {
           <div className="mb-8 animate-fade-in-up">
             <Badge variant="outline" className="px-6 py-2 text-sm bg-gradient-to-r from-green-500/10 to-blue-500/10 border-green-500/20 text-green-600 hover:scale-105 transition-transform duration-300">
               <Rocket className="w-4 h-4 mr-2 animate-pulse" />
-              Production Ready • Stellar Blockchain
+              Production Ready • OneChain Blockchain
               <Sparkles className="w-4 h-4 ml-2 animate-pulse" />
             </Badge>
           </div>
@@ -144,7 +144,7 @@ export function LandingPage() {
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
               Systematic Investment Plans, Yield Optimization, and Emergency Vaults
               <br />
-              <span className="text-primary font-semibold">All powered by real blockchain data</span>
+              <span className="text-primary font-semibold">Powered by OneChain • Move Smart Contracts • OCT Token</span>
             </p>
           </div>
 
