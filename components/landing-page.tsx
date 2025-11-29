@@ -189,7 +189,7 @@ export function LandingPage() {
                       <BarChart3 className="w-5 h-5 text-blue-600" />
                     </div>
                     <div className="space-y-2">
-                      <div className="text-3xl font-bold text-slate-900">8</div>
+                      <div className="text-3xl font-bold text-slate-900">11</div>
                       <div className="text-xs text-slate-500">Next execution in 2 days</div>
                     </div>
                   </Card>
@@ -201,7 +201,7 @@ export function LandingPage() {
                       <Lock className="w-5 h-5 text-amber-600" />
                     </div>
                     <div className="space-y-2">
-                      <div className="text-3xl font-bold text-slate-900">7051$</div>
+                      <div className="text-3xl font-bold text-slate-900">7000$</div>
                       <div className="text-xs text-slate-500">Locked until Dec 2025</div>
                     </div>
                   </Card>
