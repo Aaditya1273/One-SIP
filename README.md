@@ -263,24 +263,65 @@ npm run audit
 
 ## 🚀 **Quick Start & Deployment**
 
-### Local Development
+### Prerequisites
+- Node.js 18+ and npm
+- Rust and Cargo
+- OneChain CLI (`one`)
+
+### Automated Setup (Windows)
+```powershell
+# Run setup script
+.\scripts\setup-onechain.ps1
+```
+
+### Manual Setup
+
+#### 1. Install OneChain CLI
 ```bash
-git clone https://github.com/your-org/sphira-defi-platform
-cd sphira-defi-platform
+cargo install --locked --git https://github.com/one-chain-labs/onechain.git one_chain --features tracing
+mv ~/.cargo/bin/one_chain ~/.cargo/bin/one
+```
+
+#### 2. Create Wallet
+```bash
+one client
+# Follow prompts and save recovery phrase!
+```
+
+#### 3. Get Test OCT
+```bash
+one client faucet
+```
+
+#### 4. Install Dependencies
+```bash
 npm install
+```
+
+#### 5. Build & Deploy Contracts
+```bash
+cd contracts
+one move build
+one move test
+one client publish --gas-budget 100000000
+```
+
+#### 6. Configure Environment
+```bash
+# Copy .env.example to .env
+cp .env.example .env
+
+# Update with your Package IDs from deployment
+```
+
+#### 7. Run Development Server
+```bash
 npm run dev
 ```
 
-### Testnet Deployment (Futurenet)
-```bash
-npm run build-contracts
-npm run deploy-futurenet
-```
-
-### Mainnet Deployment
-```bash
-npm run build-contracts
-npm run deploy-mainnet
+### Automated Deployment (Windows)
+```powershell
+.\scripts\deploy-onechain.ps1
 ```
 
 ### Docker Deployment
